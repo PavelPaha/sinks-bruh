@@ -131,6 +131,7 @@ class RunMeta:
     revision: Optional[str]
     samples: int
     seed: int
+    truthfulqa_mc_policy: Optional[str]
     sink_tokens: int
     query_mode: str
     query_start: int
@@ -154,7 +155,42 @@ def _stable_id(text: str) -> str:
 
 
 def load_model_and_tokenizer(model_id: str, revision: Optional[str], quantization: str, device: str):
-    tokenizer = AutoTokenizer.from_pretrained(model_id, revision=revision, use_fast=True, trust_remote_code=True)
+    def _maybe_skip_on_auth(exc: Exception, what: str) -> None:
+        msg = str(exc)
+        gated_markers = ("gated repo", "GatedRepoError", "401 Client Error", "Unauthorized")
+        if any(m in msg for m in gated_markers):
+            print(f"[SKIP] gated/unauthorized model ({what}): {model_id}")
+            raise SystemExit(0)
+
+    def _maybe_skip_on_sentencepiece(exc: Exception, what: str) -> None:
+        msg = str(exc)
+        sp_markers = ("sentencepiece", "Couldn't instantiate the backend tokenizer")
+        if any(m in msg for m in sp_markers):
+            print(f"[SKIP] missing sentencepiece for model ({what}): {model_id}")
+            print("       Install with: pip install -U sentencepiece")
+            raise SystemExit(0)
+
+    def _maybe_skip_on_disk_full(exc: Exception, what: str) -> None:
+        msg = str(exc)
+        disk_markers = ("No space left on device", "Not enough free disk space", "[Errno 28]")
+        if any(m in msg for m in disk_markers):
+            print(f"[SKIP] insufficient disk/cache space ({what}): {model_id}")
+            print("       Tip: set HF_HOME to a bigger disk and retry.")
+            raise SystemExit(0)
+
+    try:
+        tokenizer = AutoTokenizer.from_pretrained(model_id, revision=revision, use_fast=True, trust_remote_code=True)
+    except Exception as e:
+        _maybe_skip_on_auth(e, "tokenizer")
+        _maybe_skip_on_disk_full(e, "tokenizer")
+        # If fast tokenizer can't be built, try slow (may still need sentencepiece).
+        try:
+            tokenizer = AutoTokenizer.from_pretrained(model_id, revision=revision, use_fast=False, trust_remote_code=True)
+        except Exception as e2:
+            _maybe_skip_on_auth(e2, "tokenizer")
+            _maybe_skip_on_disk_full(e2, "tokenizer")
+            _maybe_skip_on_sentencepiece(e2, "tokenizer")
+            raise
 
     quantization_config = None
     if quantization == "4bit":
@@ -180,7 +216,12 @@ def load_model_and_tokenizer(model_id: str, revision: Optional[str], quantizatio
         else:
             model_kwargs["torch_dtype"] = torch.float16
 
-    model = AutoModelForCausalLM.from_pretrained(model_id, revision=revision, **model_kwargs)
+    try:
+        model = AutoModelForCausalLM.from_pretrained(model_id, revision=revision, **model_kwargs)
+    except Exception as e:
+        _maybe_skip_on_auth(e, "weights")
+        _maybe_skip_on_disk_full(e, "weights")
+        raise
     if device == "cpu":
         model = model.to("cpu")
     model.eval()
@@ -221,54 +262,110 @@ def sink_map_from_attentions(
     return sink_mass_mean, sink_by_layer, sink_by_layer_head
 
 
-def iter_task_truthfulqa_mc(ds, samples: int, seed: int) -> Iterable[Dict[str, Any]]:
+def iter_task_truthfulqa_mc(ds, samples: int, seed: int, *, policy: str = "sample4") -> Iterable[Dict[str, Any]]:
     """
     TruthfulQA has multiple variants; we use a robust loader with fallbacks.
     We treat this as a *hallucination* task: hallucinated = not correct (under MC label).
     """
     if len(ds) > samples:
         ds = ds.shuffle(seed=seed).select(range(samples))
+    stats: Dict[str, int] = {
+        "seen": 0,
+        "yielded": 0,
+        "skip_missing_fields": 0,
+        "skip_lt4_choices": 0,
+        "skip_answer_oob": 0,
+        "skip_neg_pool_lt3": 0,
+    }
     for ex in ds:
+        stats["seen"] += 1
         # Typical fields: question, mc1_targets / mc2_targets etc. We'll prefer MC1 if present.
         q = ex.get("question") or ex.get("prompt") or ex.get("query")
 
-        # Build options
+        # Build options + correct answer index robustly across common TruthfulQA schema variants.
         choices = None
         answer_idx = None
 
-        # Newer datasets often provide 'mc1_targets' with 'choices' and 'labels'
-        mc1 = ex.get("mc1_targets")
-        if isinstance(mc1, dict):
-            choices = mc1.get("choices")
-            labels = mc1.get("labels")
-            if isinstance(labels, (list, tuple)) and len(labels) == len(choices):
-                # label 1 means correct, 0 incorrect
+        def _as_list(x):
+            return list(x) if isinstance(x, (list, tuple)) else None
+
+        # Prefer targets dicts if present (mc1_targets / mc2_targets).
+        for key in ("mc1_targets", "mc2_targets"):
+            d = ex.get(key)
+            if not isinstance(d, dict):
+                continue
+            c = _as_list(d.get("choices"))
+            labels = d.get("labels")
+            if not c:
+                continue
+            # If labels exist, argmax(label) is correct
+            if isinstance(labels, (list, tuple)) and len(labels) == len(c):
                 try:
                     answer_idx = int(np.argmax(np.array(labels, dtype=float)))
+                    choices = c
+                    break
                 except Exception:
-                    answer_idx = None
+                    pass
+            # Keep choices anyway; maybe we can recover answer from another field.
+            if choices is None:
+                choices = c
 
-        # Another common format: 'choices' and 'answer'
+        # Fallback: some variants have flat fields
         if choices is None:
-            choices = ex.get("choices")
+            choices = _as_list(ex.get("choices"))
+
         if answer_idx is None:
-            # could be int or string
-            ans = ex.get("answer")
+            # could be int, string index, letter (A/B/...), or the exact choice text
+            ans = ex.get("answer") or ex.get("correct") or ex.get("label")
             if isinstance(ans, int):
-                answer_idx = ans
+                answer_idx = int(ans)
+            elif isinstance(ans, str):
+                a = ans.strip()
+                if a.upper() in ("A", "B", "C", "D"):
+                    answer_idx = ord(a.upper()) - ord("A")
+                elif a.isdigit():
+                    answer_idx = int(a)
+                elif choices is not None and a in choices:
+                    answer_idx = int(choices.index(a))
 
         if not q or not choices or answer_idx is None:
             # skip unknown formats
+            stats["skip_missing_fields"] += 1
             continue
 
-        # Keep only first 4 options to fit A/B/C/D protocol.
-        # TruthfulQA occasionally has <4 options; skip those examples for now
-        # to keep a consistent A/B/C/D evaluation protocol.
-        choices4 = list(choices)[:4]
-        if len(choices4) < 4:
+        choices = list(choices)
+        if len(choices) < 4:
+            # keep A/B/C/D protocol
+            stats["skip_lt4_choices"] += 1
             continue
-        if answer_idx >= len(choices4):
-            continue
+
+        if policy not in ("first4", "sample4"):
+            raise ValueError(f"Unknown truthfulqa_mc policy: {policy}")
+
+        # Construct exactly 4 options A/B/C/D.
+        if policy == "first4":
+            choices4 = choices[:4]
+            if answer_idx >= 4:
+                stats["skip_answer_oob"] += 1
+                continue
+        else:
+            # sample4: always include the correct option, plus 3 distractors, then shuffle.
+            if not (0 <= int(answer_idx) < len(choices)):
+                stats["skip_answer_oob"] += 1
+                continue
+            qid = ex.get("id") or _stable_id(str(q))
+            seed_i = int(hashlib.sha1(f"{seed}:{qid}".encode("utf-8", errors="ignore")).hexdigest()[:8], 16)
+            rng_i = np.random.default_rng(seed_i)
+            correct = int(answer_idx)
+            neg_pool = [i for i in range(len(choices)) if i != correct]
+            if len(neg_pool) < 3:
+                stats["skip_neg_pool_lt3"] += 1
+                continue
+            neg = rng_i.choice(np.array(neg_pool, dtype=int), size=3, replace=False).tolist()
+            picked = [correct] + [int(x) for x in neg]
+            rng_i.shuffle(picked)
+            choices4 = [choices[i] for i in picked]
+            answer_idx = int(picked.index(correct))
 
         int_to_char = {0: "A", 1: "B", 2: "C", 3: "D"}
         target = int_to_char[answer_idx]
@@ -286,8 +383,23 @@ def iter_task_truthfulqa_mc(ds, samples: int, seed: int) -> Iterable[Dict[str, A
             "raw_prompt": raw_prompt,
             "target": target,
             "label_hallucinated": None,
-            "meta": {"question_id": ex.get("id") or _stable_id(str(q)), "source": "truthfulqa"},
+            "meta": {
+                "question_id": ex.get("id") or _stable_id(str(q)),
+                "source": "truthfulqa",
+                "truthfulqa_mc_policy": policy,
+            },
         }
+        stats["yielded"] += 1
+
+    # Helpful diagnostics: why we end up with fewer usable examples than requested.
+    print(
+        "[TruthfulQA] filter stats: "
+        f"seen={stats['seen']} yielded={stats['yielded']} "
+        f"skip_missing_fields={stats['skip_missing_fields']} "
+        f"skip_lt4_choices={stats['skip_lt4_choices']} "
+        f"skip_answer_oob={stats['skip_answer_oob']} "
+        f"skip_neg_pool_lt3={stats['skip_neg_pool_lt3']}"
+    )
 
 
 def iter_task_halueval(ds, samples: int, seed: int) -> Iterable[Dict[str, Any]]:
@@ -407,16 +519,26 @@ def load_task_dataset(task: str, split: str) -> Tuple[Any, str, Optional[str]]:
         return ds, "cais/mmlu", "all"
 
     if task == "truthfulqa_mc":
-        # Try the commonly used variants
+        # TruthfulQA has multiple configs; MC requires "multiple_choice".
+        # Try the commonly used variants (mirrors differ by dataset_id).
         # 1) truthful_qa multiple_choice
         try:
             ds = load_dataset("truthful_qa", "multiple_choice", split=split)
             return ds, "truthful_qa", "multiple_choice"
         except Exception:
             pass
-        # 2) HF community mirror
-        ds = load_dataset("truthfulqa/truthful_qa", split=split)
-        return ds, "truthfulqa/truthful_qa", None
+        # 2) HF community mirror (also needs config)
+        try:
+            ds = load_dataset("truthfulqa/truthful_qa", "multiple_choice", split=split)
+            return ds, "truthfulqa/truthful_qa", "multiple_choice"
+        except Exception:
+            pass
+        # 3) legacy: some versions required config even on mirror; surface a clear error
+        raise ValueError(
+            "Failed to load TruthfulQA multiple_choice config. "
+            "Try split='validation' and ensure datasets>=2.19. "
+            "Expected configs: ['generation', 'multiple_choice']."
+        )
 
     if task == "halueval":
         ds = load_dataset("flowaicom/HaluEval", split=split)
@@ -449,9 +571,23 @@ def main() -> None:
     parser.add_argument("--query_start", type=int, default=0, help="Used only for query_mode=range.")
     parser.add_argument("--chat", type=str, default="auto", choices=["auto", "on", "off"])
     parser.add_argument("--language", type=str, default="English", help="Used for multilingual datasets like FreshQA.")
+    parser.add_argument(
+        "--truthfulqa_mc_policy",
+        type=str,
+        default="sample4",
+        choices=["sample4", "first4"],
+        help="How to map TruthfulQA multiple-choice into A/B/C/D. "
+        "sample4 = include correct + 3 distractors (recommended, higher N). "
+        "first4 = take first 4 options (may drop many examples).",
+    )
 
     parser.add_argument("--out_dir", type=str, default=None)
     parser.add_argument("--save_text", action="store_true", help="Store prompt text in outputs (bigger files).")
+    parser.add_argument(
+        "--skip_existing",
+        action="store_true",
+        help="If the output .jsonl.gz already exists and looks non-empty, skip this run (useful for resuming large sweeps).",
+    )
     args = parser.parse_args()
 
     # Determinism for dataset sampling
@@ -459,11 +595,6 @@ def main() -> None:
     torch.manual_seed(args.seed)
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(args.seed)
-
-    ds, dataset_id, subset = load_task_dataset(args.task, args.split)
-
-    print(f"Loading model={args.model} quantization={args.quantization} device={args.device}...")
-    model, tokenizer = load_model_and_tokenizer(args.model, args.revision, args.quantization, args.device)
 
     repo_root = Path(__file__).resolve().parents[1]
     out_dir = Path(args.out_dir) if args.out_dir else (repo_root / "artifacts" / "sink_runs")
@@ -481,6 +612,23 @@ def main() -> None:
     results_path = out_dir / f"{run_name}.jsonl.gz"
     meta_path = out_dir / f"{run_name}.meta.json"
 
+    if args.skip_existing and results_path.exists():
+        try:
+            if results_path.stat().st_size > 0:
+                with gzip.open(results_path, "rt", encoding="utf-8") as f:
+                    first = f.readline()
+                if first.strip():
+                    print(f"[SKIP] existing run file: {results_path}")
+                    return
+        except Exception:
+            # If we fail to validate, fall back to recomputing.
+            pass
+
+    ds, dataset_id, subset = load_task_dataset(args.task, args.split)
+
+    print(f"Loading model={args.model} quantization={args.quantization} device={args.device}...")
+    model, tokenizer = load_model_and_tokenizer(args.model, args.revision, args.quantization, args.device)
+
     meta = RunMeta(
         task=args.task,
         dataset=dataset_id,
@@ -490,6 +638,7 @@ def main() -> None:
         revision=args.revision,
         samples=args.samples,
         seed=args.seed,
+        truthfulqa_mc_policy=(args.truthfulqa_mc_policy if args.task == "truthfulqa_mc" else None),
         sink_tokens=args.sink_tokens,
         query_mode=args.query_mode,
         query_start=args.query_start,
@@ -510,7 +659,7 @@ def main() -> None:
         iterator = iter_task_mmlu(ds, args.samples, args.seed)
         label_hallucination_available = False
     elif args.task == "truthfulqa_mc":
-        iterator = iter_task_truthfulqa_mc(ds, args.samples, args.seed)
+        iterator = iter_task_truthfulqa_mc(ds, args.samples, args.seed, policy=args.truthfulqa_mc_policy)
         label_hallucination_available = False
     elif args.task == "halueval":
         iterator = iter_task_halueval(ds, args.samples, args.seed)

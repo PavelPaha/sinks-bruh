@@ -1,0 +1,32 @@
+# Minimal deps to run hypotheses H0–H6 in generic cloud notebooks.
+# We intentionally avoid pinning versions too hard (clouds vary).
+
+numpy
+scipy
+pandas
+matplotlib
+seaborn
+tqdm
+
+# Use your platform's torch build (GPU/CPU). We keep it unpinned here.
+torch
+
+# IMPORTANT: transformers>=5 requires torch>=2.2 and will disable torch in older envs.
+transformers<5
+
+# Keep these bounded to avoid incompatible future major versions
+datasets<3
+huggingface_hub<1
+# datasets pulls filesystem backends; pin s3fs/fsspec to compatible pair
+fsspec==2024.3.1
+s3fs==2024.3.1
+requests<3
+
+accelerate
+
+# Tokenizers for LLaMA-like models (open_llama, llama, etc.)
+sentencepiece
+
+# Optional (only if you use --quantization 4bit/8bit)
+# bitsandbytes
+

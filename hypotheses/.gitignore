@@ -1,0 +1,8 @@
+.DS_Store
+.ipynb_checkpoints/
+
+# Run artifacts
+**/data/**
+**/plots/**/*.png
+**/plots/**/*.csv
+**/plots/**/metrics.json

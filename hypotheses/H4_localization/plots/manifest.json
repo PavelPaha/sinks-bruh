@@ -1,0 +1,18 @@
+{
+  "hypothesis_id": "H4_localization",
+  "generated_at": null,
+  "inputs": [],
+  "items": [
+    {
+      "path": "h1_heatmap/heatmap_grid_<task>.png",
+      "description": "Layer×Head heatmaps of Δ sink between classes.",
+      "source_script": "scripts/plot_h1_heatmap.py"
+    },
+    {
+      "path": "layers/layer_grid_<task>.png",
+      "description": "Layerwise sink profile grids per task.",
+      "source_script": "scripts/plot_layer_profiles.py"
+    }
+  ]
+}
+

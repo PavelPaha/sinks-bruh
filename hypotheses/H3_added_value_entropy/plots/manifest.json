@@ -1,0 +1,13 @@
+{
+  "hypothesis_id": "H3_added_value_entropy",
+  "generated_at": null,
+  "inputs": [],
+  "items": [
+    {
+      "path": "correlation/correlation_grid_<task>.png",
+      "description": "Scatter + regression: sink_mass vs entropy (context, not the full H3 test).",
+      "source_script": "scripts/plot_sink_entropy.py"
+    }
+  ]
+}
+

@@ -1,0 +1,19 @@
+{
+  "hypothesis_id": "H1_distribution_shift",
+  "generated_at": null,
+  "inputs": [],
+  "items": [
+    {
+      "path": "h1/h1_grid_<task>.png",
+      "description": "Violin plots of sink_mass by label (hallucinated/incorrect) per model.",
+      "source_script": "scripts/plot_h1.py",
+      "notes": "Replace <task> with truthfulqa_mc/halueval/freshqa_false_premise."
+    },
+    {
+      "path": "h1/h1_summary.csv",
+      "description": "Table with Cohen's d per (task, model, chat, quant).",
+      "source_script": "scripts/plot_h1.py"
+    }
+  ]
+}
+
