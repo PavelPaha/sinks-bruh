@@ -1,28 +1,25 @@
-# H0 — Final (sanity)
+# H0 — Sanity (auto)
 
-## Summary
-- outcome: `pending` (waiting for data)
-- what was validated:
-  - ✅ Структура скриптов корректна (`check_structure.py`, `run_plots.sh`)
-  - ✅ Шаблоны файлов на месте (`hypothesis.md`, `run_notes.md`, `final.md`, `plots/manifest.json`)
-  - ⏳ Нет входных данных для проверки (нужен хотя бы один `.jsonl.gz` в `data/`)
-- what remained broken/unclear:
-  - Нет реальных run-файлов → нельзя проверить корректность меток/NaN/диапазонов
-  - Нельзя построить графики без данных
+## What was run
+- inputs: 1 run file(s)
+- rows (pooled): 100
+- label: `incorrect` (positive rate=0.660)
 
-## Evidence (artifacts)
-- runs: none
-- plots: none (требуют входные данные)
+## Basic checks
+- accuracy (if present): 0.340
+- sink_mass: mean=0.3711, std=0.0124, range=[0.3430, 0.4021]
 
-## Implications
-- what hypotheses are safe to test next:
-  - **H0 должна быть завершена первой** (проверка структуры данных) перед H1/H4/H2/H3
-  - После получения хотя бы одного `.jsonl.gz` можно:
-    1. Проверить наличие ключей (`sink_mass`, `entropy`, `correct`, `sink_by_layer_head`)
-    2. Проверить отсутствие массовых NaN
-    3. Построить sanity-графики (accuracy vs sink, h1, layer profiles)
-    4. Перейти к H1
-- what protocol constraints we must respect going forward:
-  - Все последующие гипотезы должны использовать **те же протоколы** (K, Q, chat), что и H0, если не указано иное
-  - Run-файлы должны содержать `sink_by_layer_head` для H4 (localization)
+## Strongest signals (sanity)
+Largest |Cohen's d| across runs (sink vs label):
+- mmlu / Qwen/Qwen2.5-0.5B-Instruct: d=+0.121 (n=100)
 
+Largest |Spearman ρ| across runs (sink vs entropy):
+- mmlu / Qwen/Qwen2.5-0.5B-Instruct: ρ=-0.458 (n=100)
+
+## Local analysis artifacts
+- per-run diagnostics: `plots/runs/`
+- aggregated summaries: `plots/agg/`
+- per-run table: `runs_summary.csv`
+
+## Status
+- outcome: **ready** (data format ok; plots build)

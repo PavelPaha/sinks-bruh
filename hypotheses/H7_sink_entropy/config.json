@@ -1,0 +1,31 @@
+{
+  "tasks": [
+    {
+      "task": "truthfulqa_mc",
+      "split": "validation",
+      "samples": 500
+    }
+  ],
+  "defaults": {
+    "seed": 42,
+    "sink_tokens_list": [1, 4],
+    "query_specs": [
+      {"query_mode": "last", "query_start": 0},
+      {"query_mode": "range", "query_start": 32}
+    ],
+    "chat": "auto",
+    "device": "cuda"
+  },
+  "models": [
+    {"model": "Qwen/Qwen2.5-0.5B-Instruct", "quantization": "none"},
+    {"model": "TinyLlama/TinyLlama-1.1B-Chat-v1.0", "quantization": "none"},
+    {"model": "Qwen/Qwen2.5-1.5B-Instruct", "quantization": "none"},
+    {"model": "EleutherAI/pythia-2.8b-deduped", "quantization": "none"},
+    {"model": "microsoft/phi-2", "quantization": "none"},
+
+    {"model": "Qwen/Qwen2.5-7B-Instruct", "quantization": "none"},
+    {"model": "mistralai/Mistral-7B-Instruct-v0.3", "quantization": "none"},
+    {"model": "mistralai/Mistral-Nemo-Instruct-2407", "quantization": "none"}
+  ]
+}
+

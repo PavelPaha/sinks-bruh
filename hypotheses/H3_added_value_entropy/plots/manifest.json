@@ -1,13 +1,1201 @@
 {
   "hypothesis_id": "H3_added_value_entropy",
-  "generated_at": null,
-  "inputs": [],
+  "generated_at": 1769718081.332801,
+  "inputs": [
+    "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/data/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/data/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/data/truthfulqa_mc__Qwen__Qwen2.5-1.5B-Instruct__K4__qlast.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/data/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/data/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/data/truthfulqa_mc__microsoft__phi-2__K4__qlast.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/data/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/data/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast.jsonl.gz"
+  ],
   "items": [
     {
-      "path": "correlation/correlation_grid_<task>.png",
-      "description": "Scatter + regression: sink_mass vs entropy (context, not the full H3 test).",
-      "source_script": "scripts/plot_sink_entropy.py"
+      "kind": "metrics",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/metrics.json",
+      "desc": "Pooled train/test delta metrics."
+    },
+    {
+      "kind": "plot",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/agg/per_model_delta_auroc.png",
+      "desc": "H3 aggregate: per-model ΔAUROC."
+    },
+    {
+      "kind": "plot",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/agg/per_model_delta_logloss.png",
+      "desc": "H3 aggregate: per-model Δlogloss."
+    },
+    {
+      "kind": "plot",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/agg/scatter_delta_auroc_vs_delta_logloss.png",
+      "desc": "H3 aggregate: ΔAUROC vs Δlogloss scatter."
+    },
+    {
+      "kind": "plot",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/agg/hist_delta_auroc_across_models.png",
+      "desc": "H3 aggregate: ΔAUROC histogram across models."
+    },
+    {
+      "kind": "plot",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/agg/hist_delta_logloss_across_models.png",
+      "desc": "H3 aggregate: Δlogloss histogram across models."
+    },
+    {
+      "kind": "plot",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/agg/hist_delta_logloss_over_repeats_pooled.png",
+      "desc": "H3 aggregate: per-repeat Δlogloss pooled across models."
+    },
+    {
+      "kind": "plot",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/agg/hist_delta_auroc_over_repeats_pooled.png",
+      "desc": "H3 aggregate: per-repeat ΔAUROC pooled across models."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/hist_sink_mass.png",
+      "desc": "Histogram of sink_mass."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/hist_entropy.png",
+      "desc": "Histogram of entropy."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/hist_seq_len.png",
+      "desc": "Histogram of seq_len."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/scatter_sink_vs_entropy.png",
+      "desc": "Scatter of entropy vs sink_mass with linear fit."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/scatter_sink_vs_seq_len.png",
+      "desc": "Scatter of sink_mass vs seq_len."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/scatter_entropy_vs_seq_len.png",
+      "desc": "Scatter of entropy vs seq_len."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/curve_accuracy_vs_sink_bins.png",
+      "desc": "Accuracy as function of sink_mass quantile bin."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/curve_accuracy_vs_entropy_bins.png",
+      "desc": "Accuracy as function of entropy quantile bin."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/curve_accuracy_vs_seq_len_bins.png",
+      "desc": "Accuracy as function of seq_len quantile bin."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/box_sink_by_label.png",
+      "desc": "Boxplot of sink_mass by label."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/box_entropy_by_label.png",
+      "desc": "Boxplot of entropy by label."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/layer_profile_mean.png",
+      "desc": "Mean sink_by_layer (pooled)."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/layer_profile_by_label.png",
+      "desc": "Mean sink_by_layer per label."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/layer_profile_delta_label.png",
+      "desc": "Delta sink_by_layer between labels."
+    },
+    {
+      "kind": "heatmap",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/heatmap_layer_head_mean.png",
+      "desc": "Heatmap: mean sink_by_layer_head."
+    },
+    {
+      "kind": "heatmap",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/heatmap_layer_head_delta_label.png",
+      "desc": "Heatmap: delta sink_by_layer_head between labels."
+    },
+    {
+      "kind": "table",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/top_heads_by_abs_delta.csv",
+      "desc": "Top (layer,head) by |Δ sink_by_layer_head|."
+    },
+    {
+      "kind": "table",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/features_summary.csv",
+      "desc": "Auto-discovered numeric feature summary (all scalar metrics)."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/features/hist__entropy.png",
+      "desc": "Histogram: entropy."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/features/box__entropy__by_label.png",
+      "desc": "Boxplot: entropy by label."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/features/scatter__entropy__vs_sink_mass.png",
+      "desc": "Scatter: entropy vs sink_mass."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/features/scatter__entropy__vs_seq_len.png",
+      "desc": "Scatter: entropy vs seq_len."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/features/hist__seq_len.png",
+      "desc": "Histogram: seq_len."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/features/box__seq_len__by_label.png",
+      "desc": "Boxplot: seq_len by label."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/features/scatter__seq_len__vs_sink_mass.png",
+      "desc": "Scatter: seq_len vs sink_mass."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/features/scatter__seq_len__vs_entropy.png",
+      "desc": "Scatter: seq_len vs entropy."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/features/hist__sink_mass.png",
+      "desc": "Histogram: sink_mass."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/features/box__sink_mass__by_label.png",
+      "desc": "Boxplot: sink_mass by label."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/features/scatter__sink_mass__vs_entropy.png",
+      "desc": "Scatter: sink_mass vs entropy."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/features/scatter__sink_mass__vs_seq_len.png",
+      "desc": "Scatter: sink_mass vs seq_len."
+    },
+    {
+      "kind": "plot",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast/feature_overview_panel.png",
+      "desc": "Multi-panel: top feature correlations and core heatmap."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/hist_sink_mass.png",
+      "desc": "Histogram of sink_mass."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/hist_entropy.png",
+      "desc": "Histogram of entropy."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/hist_seq_len.png",
+      "desc": "Histogram of seq_len."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/scatter_sink_vs_entropy.png",
+      "desc": "Scatter of entropy vs sink_mass with linear fit."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/scatter_sink_vs_seq_len.png",
+      "desc": "Scatter of sink_mass vs seq_len."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/scatter_entropy_vs_seq_len.png",
+      "desc": "Scatter of entropy vs seq_len."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/curve_accuracy_vs_sink_bins.png",
+      "desc": "Accuracy as function of sink_mass quantile bin."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/curve_accuracy_vs_entropy_bins.png",
+      "desc": "Accuracy as function of entropy quantile bin."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/curve_accuracy_vs_seq_len_bins.png",
+      "desc": "Accuracy as function of seq_len quantile bin."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/box_sink_by_label.png",
+      "desc": "Boxplot of sink_mass by label."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/box_entropy_by_label.png",
+      "desc": "Boxplot of entropy by label."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/layer_profile_mean.png",
+      "desc": "Mean sink_by_layer (pooled)."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/layer_profile_by_label.png",
+      "desc": "Mean sink_by_layer per label."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/layer_profile_delta_label.png",
+      "desc": "Delta sink_by_layer between labels."
+    },
+    {
+      "kind": "heatmap",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/heatmap_layer_head_mean.png",
+      "desc": "Heatmap: mean sink_by_layer_head."
+    },
+    {
+      "kind": "heatmap",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/heatmap_layer_head_delta_label.png",
+      "desc": "Heatmap: delta sink_by_layer_head between labels."
+    },
+    {
+      "kind": "table",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/top_heads_by_abs_delta.csv",
+      "desc": "Top (layer,head) by |Δ sink_by_layer_head|."
+    },
+    {
+      "kind": "table",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/features_summary.csv",
+      "desc": "Auto-discovered numeric feature summary (all scalar metrics)."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/features/hist__entropy.png",
+      "desc": "Histogram: entropy."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/features/box__entropy__by_label.png",
+      "desc": "Boxplot: entropy by label."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/features/scatter__entropy__vs_sink_mass.png",
+      "desc": "Scatter: entropy vs sink_mass."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/features/scatter__entropy__vs_seq_len.png",
+      "desc": "Scatter: entropy vs seq_len."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/features/hist__seq_len.png",
+      "desc": "Histogram: seq_len."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/features/box__seq_len__by_label.png",
+      "desc": "Boxplot: seq_len by label."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/features/scatter__seq_len__vs_sink_mass.png",
+      "desc": "Scatter: seq_len vs sink_mass."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/features/scatter__seq_len__vs_entropy.png",
+      "desc": "Scatter: seq_len vs entropy."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/features/hist__sink_mass.png",
+      "desc": "Histogram: sink_mass."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/features/box__sink_mass__by_label.png",
+      "desc": "Boxplot: sink_mass by label."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/features/scatter__sink_mass__vs_entropy.png",
+      "desc": "Scatter: sink_mass vs entropy."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/features/scatter__sink_mass__vs_seq_len.png",
+      "desc": "Scatter: sink_mass vs seq_len."
+    },
+    {
+      "kind": "plot",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast/feature_overview_panel.png",
+      "desc": "Multi-panel: top feature correlations and core heatmap."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-1.5B-Instruct__K4__qlast/hist_sink_mass.png",
+      "desc": "Histogram of sink_mass."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-1.5B-Instruct__K4__qlast/hist_seq_len.png",
+      "desc": "Histogram of seq_len."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-1.5B-Instruct__K4__qlast/curve_accuracy_vs_seq_len_bins.png",
+      "desc": "Accuracy as function of seq_len quantile bin."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-1.5B-Instruct__K4__qlast/layer_profile_mean.png",
+      "desc": "Mean sink_by_layer (pooled)."
+    },
+    {
+      "kind": "heatmap",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-1.5B-Instruct__K4__qlast/heatmap_layer_head_mean.png",
+      "desc": "Heatmap: mean sink_by_layer_head."
+    },
+    {
+      "kind": "heatmap",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-1.5B-Instruct__K4__qlast/heatmap_layer_head_delta_label.png",
+      "desc": "Heatmap: delta sink_by_layer_head between labels."
+    },
+    {
+      "kind": "table",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-1.5B-Instruct__K4__qlast/top_heads_by_abs_delta.csv",
+      "desc": "Top (layer,head) by |Δ sink_by_layer_head|."
+    },
+    {
+      "kind": "table",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-1.5B-Instruct__K4__qlast/features_summary.csv",
+      "desc": "Auto-discovered numeric feature summary (all scalar metrics)."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-1.5B-Instruct__K4__qlast/features/hist__seq_len.png",
+      "desc": "Histogram: seq_len."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-1.5B-Instruct__K4__qlast/features/box__seq_len__by_label.png",
+      "desc": "Boxplot: seq_len by label."
+    },
+    {
+      "kind": "plot",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-1.5B-Instruct__K4__qlast/feature_overview_panel.png",
+      "desc": "Multi-panel: top feature correlations and core heatmap."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/hist_sink_mass.png",
+      "desc": "Histogram of sink_mass."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/hist_entropy.png",
+      "desc": "Histogram of entropy."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/hist_seq_len.png",
+      "desc": "Histogram of seq_len."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/scatter_sink_vs_entropy.png",
+      "desc": "Scatter of entropy vs sink_mass with linear fit."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/scatter_sink_vs_seq_len.png",
+      "desc": "Scatter of sink_mass vs seq_len."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/scatter_entropy_vs_seq_len.png",
+      "desc": "Scatter of entropy vs seq_len."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/curve_accuracy_vs_sink_bins.png",
+      "desc": "Accuracy as function of sink_mass quantile bin."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/curve_accuracy_vs_entropy_bins.png",
+      "desc": "Accuracy as function of entropy quantile bin."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/curve_accuracy_vs_seq_len_bins.png",
+      "desc": "Accuracy as function of seq_len quantile bin."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/box_sink_by_label.png",
+      "desc": "Boxplot of sink_mass by label."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/box_entropy_by_label.png",
+      "desc": "Boxplot of entropy by label."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/layer_profile_mean.png",
+      "desc": "Mean sink_by_layer (pooled)."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/layer_profile_by_label.png",
+      "desc": "Mean sink_by_layer per label."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/layer_profile_delta_label.png",
+      "desc": "Delta sink_by_layer between labels."
+    },
+    {
+      "kind": "heatmap",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/heatmap_layer_head_mean.png",
+      "desc": "Heatmap: mean sink_by_layer_head."
+    },
+    {
+      "kind": "heatmap",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/heatmap_layer_head_delta_label.png",
+      "desc": "Heatmap: delta sink_by_layer_head between labels."
+    },
+    {
+      "kind": "table",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/top_heads_by_abs_delta.csv",
+      "desc": "Top (layer,head) by |Δ sink_by_layer_head|."
+    },
+    {
+      "kind": "table",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/features_summary.csv",
+      "desc": "Auto-discovered numeric feature summary (all scalar metrics)."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/features/hist__entropy.png",
+      "desc": "Histogram: entropy."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/features/box__entropy__by_label.png",
+      "desc": "Boxplot: entropy by label."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/features/scatter__entropy__vs_sink_mass.png",
+      "desc": "Scatter: entropy vs sink_mass."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/features/scatter__entropy__vs_seq_len.png",
+      "desc": "Scatter: entropy vs seq_len."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/features/hist__seq_len.png",
+      "desc": "Histogram: seq_len."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/features/box__seq_len__by_label.png",
+      "desc": "Boxplot: seq_len by label."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/features/scatter__seq_len__vs_sink_mass.png",
+      "desc": "Scatter: seq_len vs sink_mass."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/features/scatter__seq_len__vs_entropy.png",
+      "desc": "Scatter: seq_len vs entropy."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/features/hist__sink_mass.png",
+      "desc": "Histogram: sink_mass."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/features/box__sink_mass__by_label.png",
+      "desc": "Boxplot: sink_mass by label."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/features/scatter__sink_mass__vs_entropy.png",
+      "desc": "Scatter: sink_mass vs entropy."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/features/scatter__sink_mass__vs_seq_len.png",
+      "desc": "Scatter: sink_mass vs seq_len."
+    },
+    {
+      "kind": "plot",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast/feature_overview_panel.png",
+      "desc": "Multi-panel: top feature correlations and core heatmap."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/hist_sink_mass.png",
+      "desc": "Histogram of sink_mass."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/hist_entropy.png",
+      "desc": "Histogram of entropy."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/hist_seq_len.png",
+      "desc": "Histogram of seq_len."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/scatter_sink_vs_entropy.png",
+      "desc": "Scatter of entropy vs sink_mass with linear fit."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/scatter_sink_vs_seq_len.png",
+      "desc": "Scatter of sink_mass vs seq_len."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/scatter_entropy_vs_seq_len.png",
+      "desc": "Scatter of entropy vs seq_len."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/curve_accuracy_vs_sink_bins.png",
+      "desc": "Accuracy as function of sink_mass quantile bin."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/curve_accuracy_vs_entropy_bins.png",
+      "desc": "Accuracy as function of entropy quantile bin."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/curve_accuracy_vs_seq_len_bins.png",
+      "desc": "Accuracy as function of seq_len quantile bin."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/box_sink_by_label.png",
+      "desc": "Boxplot of sink_mass by label."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/box_entropy_by_label.png",
+      "desc": "Boxplot of entropy by label."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/layer_profile_mean.png",
+      "desc": "Mean sink_by_layer (pooled)."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/layer_profile_by_label.png",
+      "desc": "Mean sink_by_layer per label."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/layer_profile_delta_label.png",
+      "desc": "Delta sink_by_layer between labels."
+    },
+    {
+      "kind": "heatmap",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/heatmap_layer_head_mean.png",
+      "desc": "Heatmap: mean sink_by_layer_head."
+    },
+    {
+      "kind": "heatmap",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/heatmap_layer_head_delta_label.png",
+      "desc": "Heatmap: delta sink_by_layer_head between labels."
+    },
+    {
+      "kind": "table",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/top_heads_by_abs_delta.csv",
+      "desc": "Top (layer,head) by |Δ sink_by_layer_head|."
+    },
+    {
+      "kind": "table",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/features_summary.csv",
+      "desc": "Auto-discovered numeric feature summary (all scalar metrics)."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/features/hist__entropy.png",
+      "desc": "Histogram: entropy."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/features/box__entropy__by_label.png",
+      "desc": "Boxplot: entropy by label."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/features/scatter__entropy__vs_sink_mass.png",
+      "desc": "Scatter: entropy vs sink_mass."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/features/scatter__entropy__vs_seq_len.png",
+      "desc": "Scatter: entropy vs seq_len."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/features/hist__seq_len.png",
+      "desc": "Histogram: seq_len."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/features/box__seq_len__by_label.png",
+      "desc": "Boxplot: seq_len by label."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/features/scatter__seq_len__vs_sink_mass.png",
+      "desc": "Scatter: seq_len vs sink_mass."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/features/scatter__seq_len__vs_entropy.png",
+      "desc": "Scatter: seq_len vs entropy."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/features/hist__sink_mass.png",
+      "desc": "Histogram: sink_mass."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/features/box__sink_mass__by_label.png",
+      "desc": "Boxplot: sink_mass by label."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/features/scatter__sink_mass__vs_entropy.png",
+      "desc": "Scatter: sink_mass vs entropy."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/features/scatter__sink_mass__vs_seq_len.png",
+      "desc": "Scatter: sink_mass vs seq_len."
+    },
+    {
+      "kind": "plot",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast/feature_overview_panel.png",
+      "desc": "Multi-panel: top feature correlations and core heatmap."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/hist_sink_mass.png",
+      "desc": "Histogram of sink_mass."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/hist_entropy.png",
+      "desc": "Histogram of entropy."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/hist_seq_len.png",
+      "desc": "Histogram of seq_len."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/scatter_sink_vs_entropy.png",
+      "desc": "Scatter of entropy vs sink_mass with linear fit."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/scatter_sink_vs_seq_len.png",
+      "desc": "Scatter of sink_mass vs seq_len."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/scatter_entropy_vs_seq_len.png",
+      "desc": "Scatter of entropy vs seq_len."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/curve_accuracy_vs_sink_bins.png",
+      "desc": "Accuracy as function of sink_mass quantile bin."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/curve_accuracy_vs_entropy_bins.png",
+      "desc": "Accuracy as function of entropy quantile bin."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/curve_accuracy_vs_seq_len_bins.png",
+      "desc": "Accuracy as function of seq_len quantile bin."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/box_sink_by_label.png",
+      "desc": "Boxplot of sink_mass by label."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/box_entropy_by_label.png",
+      "desc": "Boxplot of entropy by label."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/layer_profile_mean.png",
+      "desc": "Mean sink_by_layer (pooled)."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/layer_profile_by_label.png",
+      "desc": "Mean sink_by_layer per label."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/layer_profile_delta_label.png",
+      "desc": "Delta sink_by_layer between labels."
+    },
+    {
+      "kind": "heatmap",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/heatmap_layer_head_mean.png",
+      "desc": "Heatmap: mean sink_by_layer_head."
+    },
+    {
+      "kind": "heatmap",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/heatmap_layer_head_delta_label.png",
+      "desc": "Heatmap: delta sink_by_layer_head between labels."
+    },
+    {
+      "kind": "table",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/top_heads_by_abs_delta.csv",
+      "desc": "Top (layer,head) by |Δ sink_by_layer_head|."
+    },
+    {
+      "kind": "table",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/features_summary.csv",
+      "desc": "Auto-discovered numeric feature summary (all scalar metrics)."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/features/hist__entropy.png",
+      "desc": "Histogram: entropy."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/features/box__entropy__by_label.png",
+      "desc": "Boxplot: entropy by label."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/features/scatter__entropy__vs_sink_mass.png",
+      "desc": "Scatter: entropy vs sink_mass."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/features/scatter__entropy__vs_seq_len.png",
+      "desc": "Scatter: entropy vs seq_len."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/features/hist__seq_len.png",
+      "desc": "Histogram: seq_len."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/features/box__seq_len__by_label.png",
+      "desc": "Boxplot: seq_len by label."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/features/scatter__seq_len__vs_sink_mass.png",
+      "desc": "Scatter: seq_len vs sink_mass."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/features/scatter__seq_len__vs_entropy.png",
+      "desc": "Scatter: seq_len vs entropy."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/features/hist__sink_mass.png",
+      "desc": "Histogram: sink_mass."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/features/box__sink_mass__by_label.png",
+      "desc": "Boxplot: sink_mass by label."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/features/scatter__sink_mass__vs_entropy.png",
+      "desc": "Scatter: sink_mass vs entropy."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/features/scatter__sink_mass__vs_seq_len.png",
+      "desc": "Scatter: sink_mass vs seq_len."
+    },
+    {
+      "kind": "plot",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__microsoft__phi-2__K4__qlast/feature_overview_panel.png",
+      "desc": "Multi-panel: top feature correlations and core heatmap."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/hist_sink_mass.png",
+      "desc": "Histogram of sink_mass."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/hist_entropy.png",
+      "desc": "Histogram of entropy."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/hist_seq_len.png",
+      "desc": "Histogram of seq_len."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/scatter_sink_vs_entropy.png",
+      "desc": "Scatter of entropy vs sink_mass with linear fit."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/scatter_sink_vs_seq_len.png",
+      "desc": "Scatter of sink_mass vs seq_len."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/scatter_entropy_vs_seq_len.png",
+      "desc": "Scatter of entropy vs seq_len."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/curve_accuracy_vs_sink_bins.png",
+      "desc": "Accuracy as function of sink_mass quantile bin."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/curve_accuracy_vs_entropy_bins.png",
+      "desc": "Accuracy as function of entropy quantile bin."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/curve_accuracy_vs_seq_len_bins.png",
+      "desc": "Accuracy as function of seq_len quantile bin."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/box_sink_by_label.png",
+      "desc": "Boxplot of sink_mass by label."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/box_entropy_by_label.png",
+      "desc": "Boxplot of entropy by label."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/layer_profile_mean.png",
+      "desc": "Mean sink_by_layer (pooled)."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/layer_profile_by_label.png",
+      "desc": "Mean sink_by_layer per label."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/layer_profile_delta_label.png",
+      "desc": "Delta sink_by_layer between labels."
+    },
+    {
+      "kind": "heatmap",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/heatmap_layer_head_mean.png",
+      "desc": "Heatmap: mean sink_by_layer_head."
+    },
+    {
+      "kind": "heatmap",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/heatmap_layer_head_delta_label.png",
+      "desc": "Heatmap: delta sink_by_layer_head between labels."
+    },
+    {
+      "kind": "table",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/top_heads_by_abs_delta.csv",
+      "desc": "Top (layer,head) by |Δ sink_by_layer_head|."
+    },
+    {
+      "kind": "table",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/features_summary.csv",
+      "desc": "Auto-discovered numeric feature summary (all scalar metrics)."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/features/hist__entropy.png",
+      "desc": "Histogram: entropy."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/features/box__entropy__by_label.png",
+      "desc": "Boxplot: entropy by label."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/features/scatter__entropy__vs_sink_mass.png",
+      "desc": "Scatter: entropy vs sink_mass."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/features/scatter__entropy__vs_seq_len.png",
+      "desc": "Scatter: entropy vs seq_len."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/features/hist__seq_len.png",
+      "desc": "Histogram: seq_len."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/features/box__seq_len__by_label.png",
+      "desc": "Boxplot: seq_len by label."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/features/scatter__seq_len__vs_sink_mass.png",
+      "desc": "Scatter: seq_len vs sink_mass."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/features/scatter__seq_len__vs_entropy.png",
+      "desc": "Scatter: seq_len vs entropy."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/features/hist__sink_mass.png",
+      "desc": "Histogram: sink_mass."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/features/box__sink_mass__by_label.png",
+      "desc": "Boxplot: sink_mass by label."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/features/scatter__sink_mass__vs_entropy.png",
+      "desc": "Scatter: sink_mass vs entropy."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/features/scatter__sink_mass__vs_seq_len.png",
+      "desc": "Scatter: sink_mass vs seq_len."
+    },
+    {
+      "kind": "plot",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast/feature_overview_panel.png",
+      "desc": "Multi-panel: top feature correlations and core heatmap."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/hist_sink_mass.png",
+      "desc": "Histogram of sink_mass."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/hist_entropy.png",
+      "desc": "Histogram of entropy."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/hist_seq_len.png",
+      "desc": "Histogram of seq_len."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/scatter_sink_vs_entropy.png",
+      "desc": "Scatter of entropy vs sink_mass with linear fit."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/scatter_sink_vs_seq_len.png",
+      "desc": "Scatter of sink_mass vs seq_len."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/scatter_entropy_vs_seq_len.png",
+      "desc": "Scatter of entropy vs seq_len."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/curve_accuracy_vs_sink_bins.png",
+      "desc": "Accuracy as function of sink_mass quantile bin."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/curve_accuracy_vs_entropy_bins.png",
+      "desc": "Accuracy as function of entropy quantile bin."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/curve_accuracy_vs_seq_len_bins.png",
+      "desc": "Accuracy as function of seq_len quantile bin."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/box_sink_by_label.png",
+      "desc": "Boxplot of sink_mass by label."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/box_entropy_by_label.png",
+      "desc": "Boxplot of entropy by label."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/layer_profile_mean.png",
+      "desc": "Mean sink_by_layer (pooled)."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/layer_profile_by_label.png",
+      "desc": "Mean sink_by_layer per label."
+    },
+    {
+      "kind": "curve",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/layer_profile_delta_label.png",
+      "desc": "Delta sink_by_layer between labels."
+    },
+    {
+      "kind": "heatmap",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/heatmap_layer_head_mean.png",
+      "desc": "Heatmap: mean sink_by_layer_head."
+    },
+    {
+      "kind": "heatmap",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/heatmap_layer_head_delta_label.png",
+      "desc": "Heatmap: delta sink_by_layer_head between labels."
+    },
+    {
+      "kind": "table",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/top_heads_by_abs_delta.csv",
+      "desc": "Top (layer,head) by |Δ sink_by_layer_head|."
+    },
+    {
+      "kind": "table",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/features_summary.csv",
+      "desc": "Auto-discovered numeric feature summary (all scalar metrics)."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/features/hist__entropy.png",
+      "desc": "Histogram: entropy."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/features/box__entropy__by_label.png",
+      "desc": "Boxplot: entropy by label."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/features/scatter__entropy__vs_sink_mass.png",
+      "desc": "Scatter: entropy vs sink_mass."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/features/scatter__entropy__vs_seq_len.png",
+      "desc": "Scatter: entropy vs seq_len."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/features/hist__seq_len.png",
+      "desc": "Histogram: seq_len."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/features/box__seq_len__by_label.png",
+      "desc": "Boxplot: seq_len by label."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/features/scatter__seq_len__vs_sink_mass.png",
+      "desc": "Scatter: seq_len vs sink_mass."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/features/scatter__seq_len__vs_entropy.png",
+      "desc": "Scatter: seq_len vs entropy."
+    },
+    {
+      "kind": "hist",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/features/hist__sink_mass.png",
+      "desc": "Histogram: sink_mass."
+    },
+    {
+      "kind": "box",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/features/box__sink_mass__by_label.png",
+      "desc": "Boxplot: sink_mass by label."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/features/scatter__sink_mass__vs_entropy.png",
+      "desc": "Scatter: sink_mass vs entropy."
+    },
+    {
+      "kind": "scatter",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/features/scatter__sink_mass__vs_seq_len.png",
+      "desc": "Scatter: sink_mass vs seq_len."
+    },
+    {
+      "kind": "plot",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/runs/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast/feature_overview_panel.png",
+      "desc": "Multi-panel: top feature correlations and core heatmap."
+    },
+    {
+      "kind": "table",
+      "path": "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/plots/agg/runs_summary.csv",
+      "desc": "Per-run summary table (csv)."
     }
   ]
 }
-

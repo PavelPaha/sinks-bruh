@@ -15,6 +15,11 @@ from typing import Any, Dict, List
 import numpy as np
 
 from hypotheses._lib.io import ensure_dir, list_run_files, load_runs, read_json, require_keys, write_json
+from hypotheses._lib.analysis_ext import (
+    plot_aggregate_summary_table,
+    plot_basic_run_diagnostics,
+    summarize_run,
+)
 from hypotheses._lib.metrics import choose_label
 from hypotheses._lib.repo import find_repo_root
 from hypotheses._lib.runner import run_measure_sink_text, run_plot_script
@@ -76,10 +81,14 @@ def main() -> None:
     for spec in cfg.get("plots", []):
         out_sub = str(spec["out_subdir"])
         out = ensure_dir(plots_dir / out_sub)
-        run_plot_script(repo_root, str(spec["script"]), inputs=inputs, out_dir=out, extra_args=list(spec.get("extra_args", [])))
-        plot_items.append({"script": spec["script"], "out_dir": str(out), "extra_args": spec.get("extra_args", [])})
-
-    _update_plots_manifest(plots_dir, inputs=inputs, items=plot_items)
+        try:
+            run_plot_script(repo_root, str(spec["script"]), inputs=inputs, out_dir=out, extra_args=list(spec.get("extra_args", [])))
+            plot_items.append({"script": spec["script"], "out_dir": str(out), "extra_args": spec.get("extra_args", [])})
+        except Exception as e:
+            # Plot scripts can depend on heavier plotting deps; don't block core analysis.
+            plot_items.append(
+                {"script": spec["script"], "out_dir": str(out), "extra_args": spec.get("extra_args", []), "error": repr(e)}
+            )
 
     # write a short auto-summary (for paper drafting)
     all_rows = [row for run in runs for row in run.rows if row.get("sink_mass") is not None and row.get("correct") is not None]
@@ -99,7 +108,37 @@ def main() -> None:
     }
     write_json(plots_dir / "summary.json", summary)
 
-    md = f"""# H0 — Sanity (auto)\n\n## What was run\n- inputs: {len(inputs)} run file(s)\n- rows: {summary['n_rows']}\n- label: `{label_name}` (positive rate={pos_rate:.3f})\n\n## Basic checks\n- accuracy (if present): {acc:.3f}\n- sink_mass: mean={summary['sink_mass']['mean']:.4f}, std={summary['sink_mass']['std']:.4f}, range=[{summary['sink_mass']['min']:.4f}, {summary['sink_mass']['max']:.4f}]\n\n## Plots\nSee `{plots_dir}` (manifest: `{plots_dir / 'manifest.json'}`)\n\n## Status\n- outcome: **ready** (data format ok; plots build)\n"""
+    # Extra local-only analysis: per-run diagnostics + aggregate summaries.
+    per_run_summaries = []
+    extra_items: List[Dict[str, Any]] = []
+    runs_out_dir = ensure_dir(plots_dir / "runs")
+    for run in runs:
+        rid = run.path.name.replace(".jsonl.gz", "")
+        per_run_summaries.append(summarize_run(run.rows, run_id=rid, label_mode=args.label))
+        extra_items.extend(
+            plot_basic_run_diagnostics(
+                run.rows,
+                runs_out_dir / rid,
+                title=f"{rid}",
+                label_mode=args.label,
+            )
+        )
+
+    agg_dir = ensure_dir(plots_dir / "agg")
+    summary_csv = plot_aggregate_summary_table(per_run_summaries, agg_dir)
+    extra_items.append({"kind": "table", "path": str(summary_csv), "desc": "Per-run summary table (csv)."})
+
+    _update_plots_manifest(plots_dir, inputs=inputs, items=[*plot_items, *extra_items])
+
+    # quick "strongest runs" summary (for paper drafting)
+    finite_d = [s for s in per_run_summaries if np.isfinite(s.cohens_d_sink_pos_minus_neg)]
+    finite_rho = [s for s in per_run_summaries if np.isfinite(s.corr_sink_entropy_spearman)]
+    top_abs_d = sorted(finite_d, key=lambda s: abs(float(s.cohens_d_sink_pos_minus_neg)), reverse=True)[:3]
+    top_abs_rho = sorted(finite_rho, key=lambda s: abs(float(s.corr_sink_entropy_spearman)), reverse=True)[:3]
+    top_abs_d_str = "\n".join([f"- {s.task} / {s.model}: d={float(s.cohens_d_sink_pos_minus_neg):+.3f} (n={s.n})" for s in top_abs_d]) if top_abs_d else "- (none)"
+    top_abs_rho_str = "\n".join([f"- {s.task} / {s.model}: ρ={float(s.corr_sink_entropy_spearman):+.3f} (n={s.n})" for s in top_abs_rho]) if top_abs_rho else "- (none)"
+
+    md = f"""# H0 — Sanity (auto)\n\n## What was run\n- inputs: {len(inputs)} run file(s)\n- rows (pooled): {summary['n_rows']}\n- label: `{label_name}` (positive rate={pos_rate:.3f})\n\n## Basic checks\n- accuracy (if present): {acc:.3f}\n- sink_mass: mean={summary['sink_mass']['mean']:.4f}, std={summary['sink_mass']['std']:.4f}, range=[{summary['sink_mass']['min']:.4f}, {summary['sink_mass']['max']:.4f}]\n\n## Strongest signals (sanity)\nLargest |Cohen's d| across runs (sink vs label):\n{top_abs_d_str}\n\nLargest |Spearman ρ| across runs (sink vs entropy):\n{top_abs_rho_str}\n\n## Local analysis artifacts\n- per-run diagnostics: `plots/runs/`\n- aggregated summaries: `plots/agg/`\n- per-run table: `{summary_csv.name}`\n\n## Status\n- outcome: **ready** (data format ok; plots build)\n"""
     (hyp_dir / "final.md").write_text(md, encoding="utf-8")
 
 

@@ -1,0 +1,8 @@
+task,model,quantization,chat_mode,cohens_d,n_pos,n_neg
+truthfulqa_mc,EleutherAI/pythia-2.8b-deduped,none,auto,-0.010218135889319115,318,97
+truthfulqa_mc,Qwen/Qwen2.5-0.5B-Instruct,none,auto,0.16878447094657684,306,109
+truthfulqa_mc,Qwen/Qwen2.5-7B-Instruct,none,auto,-0.05245305031696263,106,176
+truthfulqa_mc,TinyLlama/TinyLlama-1.1B-Chat-v1.0,none,auto,-0.05092423056624354,308,107
+truthfulqa_mc,microsoft/phi-2,none,auto,-0.12527470164145882,225,190
+truthfulqa_mc,mistralai/Mistral-7B-Instruct-v0.3,none,auto,-0.20468561645300648,178,237
+truthfulqa_mc,mistralai/Mistral-Nemo-Instruct-2407,none,auto,-0.10492797438372656,168,247

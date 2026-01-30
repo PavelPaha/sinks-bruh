@@ -12,8 +12,20 @@ import time
 from typing import Any, Dict, List, Tuple
 
 import numpy as np
-import matplotlib.pyplot as plt
+try:
+    import matplotlib.pyplot as plt  # type: ignore
+except Exception:  # pragma: no cover
+    plt = None  # type: ignore
 
+from hypotheses._lib.analysis_ext import (
+    plot_aggregate_summary_table,
+    plot_aggregate_layer_profiles,
+    plot_basic_run_diagnostics,
+    plot_paired_chat_deltas,
+    plot_signflip_and_effects,
+    summarize_run,
+    write_manifest,
+)
 from hypotheses._lib.io import ensure_dir, list_run_files, load_runs, read_json, require_keys, write_json
 from hypotheses._lib.metrics import choose_label, cohens_d, pr_auc, roc_auc
 from hypotheses._lib.repo import find_repo_root
@@ -114,14 +126,24 @@ def main() -> None:
     out = {"generated_at": time.time(), "inputs": [str(p) for p in inputs], "pairs": rows_out}
     write_json(plots_dir / "metrics.json", out)
 
-    # If there are no pairs, this usually means only one chat mode was run.
-    # Make it explicit so users don't wonder why plots are missing.
-    if not rows_out:
-        (hyp_dir / "final.md").write_text(
-            f"""# H5 — Chat sensitivity (auto)\n\n## Status\n- outcome: **blocked**\n\n## Why\nNo paired runs found. H5 requires **both** `chat=auto` and `chat=off` runs for the same (task, model, K, Q, seed).\n\n## How to fix\nRun the second measurement (chat=off) into `{data_dir}`.\nExpected filenames include `__chatoff` for the off-run.\n\nInputs present:\n{chr(10).join('- ' + str(p) for p in inputs)}\n""",
-            encoding="utf-8",
-        )
-        return
+    # Extra local-only analysis: per-run diagnostics + aggregate summaries.
+    per_run_summaries = []
+    extra_items: List[Dict[str, Any]] = []
+    runs_out_dir = ensure_dir(plots_dir / "runs")
+    for run in runs:
+        rid = run.path.name.replace(".jsonl.gz", "")
+        per_run_summaries.append(summarize_run(run.rows, run_id=rid, label_mode=args.label))
+        extra_items.extend(plot_basic_run_diagnostics(run.rows, runs_out_dir / rid, title=rid, label_mode=args.label))
+
+    agg_dir = ensure_dir(plots_dir / "agg")
+    summary_csv = plot_aggregate_summary_table(per_run_summaries, agg_dir)
+    extra_items.append({"kind": "table", "path": str(summary_csv), "desc": "Per-run summary table (csv)."})
+    # Intentionally: no generic cross-run diagnostics in agg/ (only hypothesis-specific aggregations).
+    # H5-specific aggregates: paired chat deltas + stacked layer profiles (if available).
+    extra_items.extend(plot_paired_chat_deltas(per_run_summaries, agg_dir, title="H5 aggregate — chat deltas"))
+    extra_items.extend(
+        plot_aggregate_layer_profiles([(s.run_id, run.rows) for s, run in zip(per_run_summaries, runs)], agg_dir, title="H5 aggregate — layer profiles", label_mode=args.label)
+    )
 
     # Sanity plots on the combined inputs (helps visually see differences)
     try:
@@ -135,7 +157,7 @@ def main() -> None:
 
     # Simple plot: delta d histogram
     deltas = [r["delta_cohens_d"] for r in rows_out if np.isfinite(r["delta_cohens_d"])]
-    if deltas:
+    if plt is not None and deltas:
         plt.figure(figsize=(5, 3))
         plt.hist(deltas, bins=20)
         plt.axvline(0, color="black", linewidth=1)
@@ -144,7 +166,39 @@ def main() -> None:
         plt.savefig(plots_dir / "delta_cohens_d.png", dpi=150)
         plt.close()
 
-    md = f"""# H5 — Chat sensitivity (auto)\n\n## Claim being tested\nChanging chat formatting (chat template on/off) changes sink/label conclusions.\n\n## What was run\n- inputs: {len(inputs)} run file(s)\n- paired comparisons: {len(rows_out)}\n\n## Results\nSee `{plots_dir / 'metrics.json'}`.\n\n## Plots\n- `{plots_dir / 'delta_cohens_d.png'}` (if generated)\n- `{plots_dir / 'h1/h1_grid_*.png'}` (if generated)\n- `{plots_dir / 'h1_heatmap/heatmap_grid_*.png'}` (if generated)\n\n## Status\n- outcome: **preliminary** (needs more models/tasks)\n"""
+    write_manifest(
+        plots_dir,
+        hypothesis_id="H5_chat_sensitivity",
+        inputs=[Path(p) for p in inputs],
+        items=[
+            {"kind": "metrics", "path": str(plots_dir / "metrics.json"), "desc": "Paired chat(auto/off) comparisons."},
+            *(
+                [{"kind": "plot", "path": str(plots_dir / "delta_cohens_d.png"), "desc": "Histogram of Δ Cohen's d (off - auto)."}]
+                if plt is not None
+                else []
+            ),
+            *extra_items,
+        ],
+    )
+
+    deltas_arr = np.array([float(r["delta_cohens_d"]) for r in rows_out], dtype=float) if rows_out else np.array([], dtype=float)
+    deltas_arr = deltas_arr[np.isfinite(deltas_arr)]
+    top_abs = sorted(
+        rows_out,
+        key=lambda r: abs(float(r.get("delta_cohens_d", float("nan")))) if np.isfinite(float(r.get("delta_cohens_d", float("nan")))) else -1.0,
+        reverse=True,
+    )[:3] if rows_out else []
+    top_abs_str = "\n".join(
+        [
+            f"- {r['task']} / {r['model']}: Δd={float(r['delta_cohens_d']):+.3f} (auto d={float(r['auto']['cohens_d']):+.3f}, off d={float(r['off']['cohens_d']):+.3f})"
+            for r in top_abs
+        ]
+    ) if top_abs else "- (none)"
+
+    if not rows_out:
+        md = f"""# H5 — Chat sensitivity (auto)\n\n## Claim being tested\nChanging chat formatting (chat template on/off) changes sink/label conclusions.\n\n## Status\n- outcome: **blocked** (no paired runs)\n\n## Why\nNo paired runs found. H5 requires **both** `chat=auto` and `chat=off` runs for the same (task, model, K, Q, seed).\n\n## What we still produced\n- per-run diagnostics: `plots/runs/`\n- aggregate analysis: `plots/agg/` (table: `{summary_csv.name}`)\n\n## How to fix\nRun the missing chat mode into `{data_dir}`.\n"""
+    else:
+        md = f"""# H5 — Chat sensitivity (auto)\n\n## Claim being tested\nChanging chat formatting (chat template on/off) changes sink/label conclusions.\n\n## What was run\n- inputs: {len(inputs)} run file(s)\n- paired comparisons: {len(rows_out)}\n\n## Results\n- metrics: `plots/metrics.json`\n- Δd summary (off - auto): mean={float(np.mean(deltas_arr)) if deltas_arr.size else float('nan'):+.3f}, median={float(np.median(deltas_arr)) if deltas_arr.size else float('nan'):+.3f}\n\nLargest |Δd| pairs:\n{top_abs_str}\n\n## Plots\n- `plots/delta_cohens_d.png` (if generated)\n- `plots/h1/h1_grid_*.png` (if generated)\n- `plots/h1_heatmap/heatmap_grid_*.png` (if generated)\n\n## Extra diagnostics\n- per-run: `plots/runs/`\n- aggregate: `plots/agg/` (table: `{summary_csv.name}`)\n\n## Status\n- outcome: **preliminary** (needs more models/tasks)\n"""
     (hyp_dir / "final.md").write_text(md, encoding="utf-8")
 
 

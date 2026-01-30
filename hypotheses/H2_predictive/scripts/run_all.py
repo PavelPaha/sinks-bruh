@@ -12,8 +12,18 @@ import time
 from typing import Any, Dict, List, Tuple
 
 import numpy as np
-import matplotlib.pyplot as plt
+try:
+    import matplotlib.pyplot as plt  # type: ignore
+except Exception:  # pragma: no cover
+    plt = None  # type: ignore
 
+from hypotheses._lib.analysis_ext import (
+    plot_aggregate_summary_table,
+    plot_basic_run_diagnostics,
+    plot_signflip_and_effects,
+    summarize_run,
+    write_manifest,
+)
 from hypotheses._lib.io import ensure_dir, list_run_files, load_runs, read_json, require_keys, write_json
 from hypotheses._lib.metrics import choose_label, pr_auc, roc_auc
 from hypotheses._lib.logreg import eval_probs, fit_logistic, predict_proba, zscore_apply, zscore_fit
@@ -49,6 +59,8 @@ def pr_curve(y: np.ndarray, s: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
 
 def save_curves(out_dir: Path, *, y: np.ndarray, features: Dict[str, np.ndarray]) -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
+    if plt is None:
+        return
 
     # ROC
     plt.figure(figsize=(4.5, 4.5))
@@ -123,15 +135,6 @@ def main() -> None:
     if not required_ok:
         raise SystemExit(f"Missing required keys across runs: {missing}")
 
-    rows = [
-        r
-        for r in all_rows
-        if r.get("sink_mass") is not None and r.get("entropy") is not None and r.get("correct") is not None
-    ]
-    label_name, y = choose_label(rows, args.label)
-    sink = np.array([float(r["sink_mass"]) for r in rows], dtype=float)
-    ent = np.array([float(r["entropy"]) for r in rows], dtype=float)
-
     rng = np.random.default_rng(args.seed)
 
     def stratified_split(y_arr: np.ndarray, test_frac: float, rng: np.random.Generator) -> Tuple[np.ndarray, np.ndarray]:
@@ -146,92 +149,237 @@ def main() -> None:
         train_idx = np.setdiff1d(np.arange(len(y_arr)), test_idx, assume_unique=False)
         return train_idx, test_idx
 
-    # Evaluate: raw score (no training) AND trained logistic classifier on sink_mass.
-    per_rep = []
+    # Evaluate PER RUN (per-model consistency), not pooled across all models.
+    per_run_results: List[Dict[str, Any]] = []
     last_eval = None
-    for rep in range(int(args.repeats)):
-        if args.eval_mode == "in_sample":
-            train_idx = np.arange(len(y))
-            test_idx = np.arange(len(y))
-        else:
-            train_idx, test_idx = stratified_split(y, float(args.test_frac), rng)
 
-        y_tr, y_te = y[train_idx], y[test_idx]
-        s_tr, s_te = sink[train_idx], sink[test_idx]
-        e_tr, e_te = ent[train_idx], ent[test_idx]
-
-        # z-score on train only
-        s_stats = zscore_fit(s_tr)
-        e_stats = zscore_fit(e_tr)
-        s_tr_z = zscore_apply(s_tr, s_stats)[:, None]
-        s_te_z = zscore_apply(s_te, s_stats)[:, None]
-
-        # logistic on sink
-        fit = fit_logistic(s_tr_z, y_tr.astype(int))
-        p_te = predict_proba(s_te_z, fit)
-
-        eval_raw = {
-            "auroc": float(roc_auc(y_te, s_te)),
-            "auprc": float(pr_auc(y_te, s_te)),
-        }
-        eval_clf = {
-            **eval_probs(y_te.astype(int), p_te),
-            "auprc": float(pr_auc(y_te, p_te)),
-        }
-
-        per_rep.append(
-            {
-                "rep": rep,
-                "n_train": int(len(train_idx)),
-                "n_test": int(len(test_idx)),
-                "pos_rate_train": float(np.mean(y_tr)),
-                "pos_rate_test": float(np.mean(y_te)),
-                "raw_sink_mass": eval_raw,
-                "logreg_sink_mass": eval_clf,
-            }
-        )
-        last_eval = (y_te.astype(int), {"sink_mass": s_te, "sink_logreg": p_te})
-
-    def agg(path: List[Dict[str, Any]], key_chain: List[str]) -> Dict[str, float]:
+    def agg(per_rep: List[Dict[str, Any]], key_chain: List[str]) -> Dict[str, float]:
         vals = []
-        for r in path:
+        for r in per_rep:
             cur: Any = r
             for k in key_chain:
                 cur = cur[k]
             vals.append(float(cur))
         arr = np.array(vals, dtype=float)
+        arr = arr[np.isfinite(arr)]
+        if arr.size == 0:
+            return {"mean": float("nan"), "std": float("nan"), "min": float("nan"), "max": float("nan")}
         return {"mean": float(np.mean(arr)), "std": float(np.std(arr)), "min": float(np.min(arr)), "max": float(np.max(arr))}
 
+    for run in runs:
+        run_rows = [
+            r
+            for r in run.rows
+            if (r.get("sink_mass") is not None)
+            and (r.get("entropy") is not None)
+            and (r.get("correct") is not None)
+        ]
+        if not run_rows:
+            continue
+        label_name, y = choose_label(run_rows, args.label)
+        sink = np.array([float(r["sink_mass"]) for r in run_rows], dtype=float)
+        ent = np.array([float(r["entropy"]) for r in run_rows], dtype=float)
+        m = np.isfinite(sink) & np.isfinite(ent) & np.isfinite(y.astype(float))
+        sink = sink[m]
+        ent = ent[m]
+        y = y[m].astype(int)
+        if sink.size < 50 or len(set(int(v) for v in y)) < 2:
+            continue
+
+        per_rep = []
+        for rep in range(int(args.repeats)):
+            if args.eval_mode == "in_sample":
+                train_idx = np.arange(len(y))
+                test_idx = np.arange(len(y))
+            else:
+                train_idx, test_idx = stratified_split(y, float(args.test_frac), rng)
+
+            y_tr, y_te = y[train_idx], y[test_idx]
+            s_tr, s_te = sink[train_idx], sink[test_idx]
+
+            # z-score on train only
+            s_stats = zscore_fit(s_tr[np.isfinite(s_tr)])
+            s_tr_z = zscore_apply(s_tr, s_stats)[:, None]
+            s_te_z = zscore_apply(s_te, s_stats)[:, None]
+
+            fit = fit_logistic(s_tr_z, y_tr.astype(int))
+            p_te = predict_proba(s_te_z, fit)
+
+            # Filter non-finite predictions just in case
+            mp = np.isfinite(p_te)
+            y_te2 = y_te[mp]
+            s_te2 = s_te[mp]
+            p_te2 = p_te[mp]
+
+            eval_raw = {
+                "auroc": float(roc_auc(y_te2, s_te2)),
+                "auprc": float(pr_auc(y_te2, s_te2)),
+            }
+            eval_clf = {
+                **eval_probs(y_te2.astype(int), p_te2),
+                "auprc": float(pr_auc(y_te2, p_te2)),
+            }
+
+            per_rep.append(
+                {
+                    "rep": rep,
+                    "n_train": int(len(train_idx)),
+                    "n_test": int(len(test_idx)),
+                    "pos_rate_train": float(np.mean(y_tr)),
+                    "pos_rate_test": float(np.mean(y_te2)),
+                    "raw_sink_mass": eval_raw,
+                    "logreg_sink_mass": eval_clf,
+                }
+            )
+
+            # Keep curves for the last processed run+rep
+            last_eval = (y_te2.astype(int), {"sink_mass": s_te2, "sink_logreg": p_te2})
+
+        per_run_results.append(
+            {
+                "run_id": run.path.name.replace(".jsonl.gz", ""),
+                "task": run.task,
+                "model": run.model,
+                "chat_mode": run.chat_mode,
+                "quantization": run.quantization,
+                "label": label_name,
+                "n": int(len(y)),
+                "pos_rate": float(np.mean(y)),
+                "eval_mode": args.eval_mode,
+                "test_frac": float(args.test_frac),
+                "repeats": int(args.repeats),
+                "per_repeat": per_rep,
+                "summary": {
+                    "raw_sink_mass": {
+                        "auroc": agg(per_rep, ["raw_sink_mass", "auroc"]),
+                        "auprc": agg(per_rep, ["raw_sink_mass", "auprc"]),
+                    },
+                    "logreg_sink_mass": {
+                        "auroc": agg(per_rep, ["logreg_sink_mass", "auroc"]),
+                        "auprc": agg(per_rep, ["logreg_sink_mass", "auprc"]),
+                        "logloss": agg(per_rep, ["logreg_sink_mass", "logloss"]),
+                    },
+                },
+            }
+        )
+
     out = {
-        "label": label_name,
-        "n": int(len(y)),
-        "pos_rate": float(np.mean(y)),
         "eval_mode": args.eval_mode,
         "test_frac": float(args.test_frac),
         "repeats": int(args.repeats),
-        "per_repeat": per_rep,
-        "summary": {
-            "raw_sink_mass": {
-                "auroc": agg(per_rep, ["raw_sink_mass", "auroc"]),
-                "auprc": agg(per_rep, ["raw_sink_mass", "auprc"]),
-            },
-            "logreg_sink_mass": {
-                "auroc": agg(per_rep, ["logreg_sink_mass", "auroc"]),
-                "auprc": agg(per_rep, ["logreg_sink_mass", "auprc"]),
-                "logloss": agg(per_rep, ["logreg_sink_mass", "logloss"]),
-            },
-        },
+        "n_runs": int(len(per_run_results)),
+        "per_run": per_run_results,
         "inputs": [str(p) for p in inputs],
         "generated_at": time.time(),
     }
     write_json(plots_dir / "metrics.json", out)
 
-    # Curves: last split
-    if last_eval is not None:
+    agg_dir = ensure_dir(plots_dir / "agg")
+
+    # Curves: last split (from last processed run)
+    if last_eval is not None and plt is not None:
         y_plot, feats = last_eval
         save_curves(plots_dir, y=y_plot, features=feats)
 
-    md = f"""# H2 — Predictive (train/test)\n\n## Claim being tested\n`sink_mass` can be used to predict the positive class (hallucinated/incorrect).\n\n## Protocol\n- label: `{label_name}`\n- eval_mode: `{args.eval_mode}` (test_frac={args.test_frac}, repeats={args.repeats})\n\n## What we fit\n- logistic regression: `y ~ zscore(sink_mass)` (trained on train, evaluated on test)\n- plus a no-training baseline: AUROC/AUPRC of raw `sink_mass`\n\n## Results (mean±std across repeats)\n- raw sink_mass AUROC: {out['summary']['raw_sink_mass']['auroc']['mean']:.3f} ± {out['summary']['raw_sink_mass']['auroc']['std']:.3f}\n- logreg(sink_mass) AUROC: {out['summary']['logreg_sink_mass']['auroc']['mean']:.3f} ± {out['summary']['logreg_sink_mass']['auroc']['std']:.3f}\n\nFull details: `{plots_dir / 'metrics.json'}`\nPlots (last split): `{plots_dir / 'roc.png'}`, `{plots_dir / 'pr.png'}`\n"""
+    # H2-specific aggregates (across models) -> plots/agg/
+    if plt is not None and per_run_results:
+        labels = np.array([str(r["model"]) for r in per_run_results], dtype=object)
+        raw_auroc = np.array([float(r["summary"]["raw_sink_mass"]["auroc"]["mean"]) for r in per_run_results], dtype=float)
+        clf_auroc = np.array([float(r["summary"]["logreg_sink_mass"]["auroc"]["mean"]) for r in per_run_results], dtype=float)
+        raw_auprc = np.array([float(r["summary"]["raw_sink_mass"]["auprc"]["mean"]) for r in per_run_results], dtype=float)
+        clf_auprc = np.array([float(r["summary"]["logreg_sink_mass"]["auprc"]["mean"]) for r in per_run_results], dtype=float)
+        clf_ll = np.array([float(r["summary"]["logreg_sink_mass"]["logloss"]["mean"]) for r in per_run_results], dtype=float)
+
+        # 1) AUROC canvas
+        order = np.argsort(raw_auroc)
+        plt.figure(figsize=(10.8, 4.2))
+        plt.plot(raw_auroc[order], marker="o", label="raw sink_mass (AUROC)")
+        plt.plot(clf_auroc[order], marker="o", label="logreg(sink_mass) (AUROC)")
+        plt.axhline(0.5, color="gray", linestyle="--", linewidth=1)
+        plt.xticks(range(len(labels)), labels[order], rotation=60, ha="right", fontsize=7)
+        plt.ylabel("AUROC")
+        plt.title("H2: per-model predictive power (AUROC)")
+        plt.legend(fontsize=8)
+        plt.tight_layout()
+        p = agg_dir / "per_model_auroc.png"
+        plt.savefig(p, dpi=150)
+        plt.close()
+
+        # 2) AUPRC canvas
+        order = np.argsort(raw_auprc)
+        plt.figure(figsize=(10.8, 4.2))
+        plt.plot(raw_auprc[order], marker="o", label="raw sink_mass (AUPRC)")
+        plt.plot(clf_auprc[order], marker="o", label="logreg(sink_mass) (AUPRC)")
+        plt.xticks(range(len(labels)), labels[order], rotation=60, ha="right", fontsize=7)
+        plt.ylabel("AUPRC")
+        plt.title("H2: per-model predictive power (AUPRC)")
+        plt.legend(fontsize=8)
+        plt.tight_layout()
+        p = agg_dir / "per_model_auprc.png"
+        plt.savefig(p, dpi=150)
+        plt.close()
+
+        # 3) Logloss by model (classifier)
+        order = np.argsort(clf_ll)
+        plt.figure(figsize=(10.8, 4.2))
+        plt.plot(clf_ll[order], marker="o", label="logreg(sink_mass) logloss")
+        plt.xticks(range(len(labels)), labels[order], rotation=60, ha="right", fontsize=7)
+        plt.ylabel("logloss")
+        plt.title("H2: per-model classifier calibration (logloss)")
+        plt.legend(fontsize=8)
+        plt.tight_layout()
+        p = agg_dir / "per_model_logloss.png"
+        plt.savefig(p, dpi=150)
+        plt.close()
+
+    # Extra local-only analysis: per-run diagnostics + aggregate summaries.
+    per_run_summaries = []
+    extra_items: List[Dict[str, Any]] = []
+    runs_out_dir = ensure_dir(plots_dir / "runs")
+    for run in runs:
+        rid = run.path.name.replace(".jsonl.gz", "")
+        per_run_summaries.append(summarize_run(run.rows, run_id=rid, label_mode=args.label))
+        extra_items.extend(plot_basic_run_diagnostics(run.rows, runs_out_dir / rid, title=rid, label_mode=args.label))
+
+    summary_csv = plot_aggregate_summary_table(per_run_summaries, agg_dir)
+    extra_items.append({"kind": "table", "path": str(summary_csv), "desc": "Per-run summary table (csv)."})
+    # Intentionally: no generic cross-run diagnostics in agg/ (only hypothesis-specific aggregations).
+
+    write_manifest(
+        plots_dir,
+        hypothesis_id="H2_predictive",
+        inputs=[Path(p) for p in inputs],
+        items=[
+            {"kind": "metrics", "path": str(plots_dir / "metrics.json"), "desc": "Pooled train/test evaluation metrics."},
+            *(
+                [
+                    {"kind": "plot", "path": str(plots_dir / "roc.png"), "desc": "ROC curves on last split (pooled)."},
+                    {"kind": "plot", "path": str(plots_dir / "pr.png"), "desc": "PR curves on last split (pooled)."},
+                ]
+                if (plt is not None and last_eval is not None)
+                else []
+            ),
+            *(
+                [
+                    {"kind": "plot", "path": str(agg_dir / "per_model_auroc.png"), "desc": "H2 aggregate: per-model AUROC (raw vs logreg)."},
+                    {"kind": "plot", "path": str(agg_dir / "per_model_auprc.png"), "desc": "H2 aggregate: per-model AUPRC (raw vs logreg)."},
+                    {"kind": "plot", "path": str(agg_dir / "per_model_logloss.png"), "desc": "H2 aggregate: per-model logloss (logreg)."},
+                ]
+                if (plt is not None and (agg_dir / "per_model_auroc.png").exists())
+                else []
+            ),
+            *extra_items,
+        ],
+    )
+
+    # Summaries from per-run raw AUROC (from diagnostics) still useful, but H2's classifier results live in plots/metrics.json now.
+    finite_auroc = [s for s in per_run_summaries if np.isfinite(s.auroc_sink_vs_label)]
+    best = sorted(finite_auroc, key=lambda s: float(s.auroc_sink_vs_label), reverse=True)[:3]
+    worst = sorted(finite_auroc, key=lambda s: float(s.auroc_sink_vs_label))[:3]
+    best_str = "\n".join([f"- {s.task} / {s.model}: AUROC={float(s.auroc_sink_vs_label):.3f} (n={s.n})" for s in best]) if best else "- (none)"
+    worst_str = "\n".join([f"- {s.task} / {s.model}: AUROC={float(s.auroc_sink_vs_label):.3f} (n={s.n})" for s in worst]) if worst else "- (none)"
+
+    md = f"""# H2 — Predictive (train/test)\n\n## Claim being tested\n`sink_mass` can be used to predict the positive class (hallucinated/incorrect).\n\n## Protocol\n- eval_mode: `{args.eval_mode}` (test_frac={args.test_frac}, repeats={args.repeats})\n\n## What we fit (per model/run)\n- baseline: AUROC/AUPRC of raw `sink_mass`\n- classifier: logistic regression `y ~ zscore(sink_mass)` trained on train, evaluated on test\n\n## Where the *actual* results are\n- per-model/per-run results: `plots/metrics.json`\n- per-model AUROC canvas: `plots/per_model_auroc.png` (if generated)\n- example curves (last processed split): `plots/roc.png`, `plots/pr.png`\n\n## Heterogeneity across runs (raw sink AUROC from run summaries)\nBest:\n{best_str}\n\nWorst:\n{worst_str}\n\n## Extra diagnostics\n- per-run: `plots/runs/`\n- aggregate: `plots/agg/` (table: `{summary_csv.name}`)\n"""
     (hyp_dir / "final.md").write_text(md, encoding="utf-8")
 
 

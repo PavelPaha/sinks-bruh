@@ -1,0 +1,16 @@
+{
+  "hypothesis": "H0_sanity",
+  "n_rows": 100,
+  "label": "incorrect",
+  "pos_rate": 0.66,
+  "accuracy": 0.34,
+  "sink_mass": {
+    "mean": 0.37109446484772923,
+    "std": 0.012393574605597518,
+    "min": 0.34300658390635536,
+    "max": 0.40206295801770126
+  },
+  "inputs": [
+    "/Users/aeshef/Downloads/sinks/hypotheses/H0_sanity/data/mmlu__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast.jsonl.gz"
+  ]
+}

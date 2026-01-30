@@ -1,0 +1,1111 @@
+{
+  "eval_mode": "holdout",
+  "test_frac": 0.3,
+  "repeats": 5,
+  "bootstrap": 300,
+  "n_runs": 7,
+  "per_run": [
+    {
+      "run_id": "truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast",
+      "task": "truthfulqa_mc",
+      "model": "EleutherAI/pythia-2.8b-deduped",
+      "chat_mode": "auto",
+      "quantization": "none",
+      "label": "hallucinated",
+      "n": 415,
+      "pos_rate": 0.7662650602409639,
+      "eval_mode": "holdout",
+      "test_frac": 0.3,
+      "repeats": 5,
+      "bootstrap": 300,
+      "per_repeat": [
+        {
+          "rep": 0,
+          "n_train": 291,
+          "n_test": 124,
+          "pos_rate_train": 0.7663230240549829,
+          "pos_rate_test": 0.7661290322580645,
+          "entropy_only": {
+            "logloss": 0.5517881995374667,
+            "auroc": 0.4987295825771325
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.5517714937434057,
+            "auroc": 0.49764065335753177
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": 5.7266855554835016e-05,
+              "p05": -0.0014289145751195775,
+              "p95": 0.0014913884424950508
+            },
+            "delta_auroc": {
+              "mean": -0.0008186560091684614,
+              "p05": -0.015003336203185497,
+              "p95": 0.01176613413315374
+            }
+          }
+        },
+        {
+          "rep": 1,
+          "n_train": 291,
+          "n_test": 124,
+          "pos_rate_train": 0.7663230240549829,
+          "pos_rate_test": 0.7661290322580645,
+          "entropy_only": {
+            "logloss": 0.5457240620569371,
+            "auroc": 0.5259528130671506
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.5470417881162358,
+            "auroc": 0.5197822141560798
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": -0.0013698919157088829,
+              "p05": -0.0034548349173299407,
+              "p95": 0.0009838908819512337
+            },
+            "delta_auroc": {
+              "mean": -0.0065196974495242,
+              "p05": -0.029215693500382584,
+              "p95": 0.019991119991119983
+            }
+          }
+        },
+        {
+          "rep": 2,
+          "n_train": 291,
+          "n_test": 124,
+          "pos_rate_train": 0.7663230240549829,
+          "pos_rate_test": 0.7661290322580645,
+          "entropy_only": {
+            "logloss": 0.5418917096591224,
+            "auroc": 0.5208711433756806
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.5424499564260231,
+            "auroc": 0.5183303085299455
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": -0.0005932941358471582,
+              "p05": -0.003493034692041097,
+              "p95": 0.002443186163235828
+            },
+            "delta_auroc": {
+              "mean": -0.0024845016074055877,
+              "p05": -0.0333363581367211,
+              "p95": 0.02827426046176047
+            }
+          }
+        },
+        {
+          "rep": 3,
+          "n_train": 291,
+          "n_test": 124,
+          "pos_rate_train": 0.7663230240549829,
+          "pos_rate_test": 0.7661290322580645,
+          "entropy_only": {
+            "logloss": 0.5390164583669542,
+            "auroc": 0.5644283121597096
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.5407386239095326,
+            "auroc": 0.5531760435571688
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": -0.0016342474067494758,
+              "p05": -0.006524143227562512,
+              "p95": 0.0026202266480306216
+            },
+            "delta_auroc": {
+              "mean": -0.010948855377338,
+              "p05": -0.056590634606938986,
+              "p95": 0.030845216874628673
+            }
+          }
+        },
+        {
+          "rep": 4,
+          "n_train": 291,
+          "n_test": 124,
+          "pos_rate_train": 0.7663230240549829,
+          "pos_rate_test": 0.7661290322580645,
+          "entropy_only": {
+            "logloss": 0.5579580510084985,
+            "auroc": 0.4725952813067151
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.5588460463736424,
+            "auroc": 0.467513611615245
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": -0.0008716628020137437,
+              "p05": -0.00250366839387437,
+              "p95": 0.0010864818050859044
+            },
+            "delta_auroc": {
+              "mean": -0.005200998121004062,
+              "p05": -0.017109684430272918,
+              "p95": 0.006332735879288722
+            }
+          }
+        }
+      ],
+      "summary": {
+        "delta_logloss_mean_over_repeats": -0.0008823658809528852,
+        "delta_auroc_mean_over_repeats": -0.005194541712888062
+      }
+    },
+    {
+      "run_id": "truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast",
+      "task": "truthfulqa_mc",
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "chat_mode": "auto",
+      "quantization": "none",
+      "label": "hallucinated",
+      "n": 415,
+      "pos_rate": 0.7373493975903614,
+      "eval_mode": "holdout",
+      "test_frac": 0.3,
+      "repeats": 5,
+      "bootstrap": 300,
+      "per_repeat": [
+        {
+          "rep": 0,
+          "n_train": 290,
+          "n_test": 125,
+          "pos_rate_train": 0.7379310344827587,
+          "pos_rate_test": 0.736,
+          "entropy_only": {
+            "logloss": 0.5825362151362984,
+            "auroc": 0.4795783926218709
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.5802033551611674,
+            "auroc": 0.4963768115942029
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": 0.002091658607495266,
+              "p05": -0.00808371082012167,
+              "p95": 0.013600652258134545
+            },
+            "delta_auroc": {
+              "mean": 0.018339277030654674,
+              "p05": -0.04887270165805723,
+              "p95": 0.09782143551838166
+            }
+          }
+        },
+        {
+          "rep": 1,
+          "n_train": 290,
+          "n_test": 125,
+          "pos_rate_train": 0.7379310344827587,
+          "pos_rate_test": 0.736,
+          "entropy_only": {
+            "logloss": 0.5772294205184253,
+            "auroc": 0.5062582345191041
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.5733388931855063,
+            "auroc": 0.5247035573122529
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": 0.003986551291754296,
+              "p05": 0.0008104781277006146,
+              "p95": 0.007314839600325779
+            },
+            "delta_auroc": {
+              "mean": 0.017773032566560047,
+              "p05": -0.01810953413496292,
+              "p95": 0.05099708116180318
+            }
+          }
+        },
+        {
+          "rep": 2,
+          "n_train": 290,
+          "n_test": 125,
+          "pos_rate_train": 0.7379310344827587,
+          "pos_rate_test": 0.736,
+          "entropy_only": {
+            "logloss": 0.5763064281085545,
+            "auroc": 0.5092226613965745
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.5761947424890117,
+            "auroc": 0.5240447957839263
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": 0.00028088920779408076,
+              "p05": -0.010810554642105386,
+              "p95": 0.010956866122452284
+            },
+            "delta_auroc": {
+              "mean": 0.015761195846702516,
+              "p05": -0.06823103367221015,
+              "p95": 0.09523118645789451
+            }
+          }
+        },
+        {
+          "rep": 3,
+          "n_train": 290,
+          "n_test": 125,
+          "pos_rate_train": 0.7379310344827587,
+          "pos_rate_test": 0.736,
+          "entropy_only": {
+            "logloss": 0.5743190912735374,
+            "auroc": 0.5622529644268774
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.5700048895248045,
+            "auroc": 0.5879446640316206
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": 0.004606226463299206,
+              "p05": -0.0035130716150485186,
+              "p95": 0.013106106279459824
+            },
+            "delta_auroc": {
+              "mean": 0.028423406210688392,
+              "p05": -0.046063113953858995,
+              "p95": 0.11015870475906483
+            }
+          }
+        },
+        {
+          "rep": 4,
+          "n_train": 290,
+          "n_test": 125,
+          "pos_rate_train": 0.7379310344827587,
+          "pos_rate_test": 0.736,
+          "entropy_only": {
+            "logloss": 0.5769508220311268,
+            "auroc": 0.5177865612648221
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.5786812934271278,
+            "auroc": 0.4845191040843215
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": -0.001537540811439447,
+              "p05": -0.01861369572273907,
+              "p95": 0.013752123273109115
+            },
+            "delta_auroc": {
+              "mean": -0.03531519621238045,
+              "p05": -0.1388834853965972,
+              "p95": 0.06431869267892193
+            }
+          }
+        }
+      ],
+      "summary": {
+        "delta_logloss_mean_over_repeats": 0.00188555695178068,
+        "delta_auroc_mean_over_repeats": 0.008996343088445036
+      }
+    },
+    {
+      "run_id": "truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast",
+      "task": "truthfulqa_mc",
+      "model": "Qwen/Qwen2.5-7B-Instruct",
+      "chat_mode": "auto",
+      "quantization": "none",
+      "label": "hallucinated",
+      "n": 282,
+      "pos_rate": 0.375886524822695,
+      "eval_mode": "holdout",
+      "test_frac": 0.3,
+      "repeats": 5,
+      "bootstrap": 300,
+      "per_repeat": [
+        {
+          "rep": 0,
+          "n_train": 197,
+          "n_test": 85,
+          "pos_rate_train": 0.3756345177664975,
+          "pos_rate_test": 0.3764705882352941,
+          "entropy_only": {
+            "logloss": 0.6585043356385977,
+            "auroc": 0.5837264150943396
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.6658064723853481,
+            "auroc": 0.47641509433962265
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": -0.007493443736269302,
+              "p05": -0.013273330813092447,
+              "p95": -0.0023832777072586224
+            },
+            "delta_auroc": {
+              "mean": -0.11052289914329584,
+              "p05": -0.21200128700128695,
+              "p95": -0.025045711033614207
+            }
+          }
+        },
+        {
+          "rep": 1,
+          "n_train": 197,
+          "n_test": 85,
+          "pos_rate_train": 0.3756345177664975,
+          "pos_rate_test": 0.3764705882352941,
+          "entropy_only": {
+            "logloss": 0.6618208593861026,
+            "auroc": 0.5483490566037735
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.6613654005834441,
+            "auroc": 0.5560141509433962
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": 0.00021061847213602308,
+              "p05": -0.009274972323117326,
+              "p95": 0.007714432834355989
+            },
+            "delta_auroc": {
+              "mean": 0.003387763084179643,
+              "p05": -0.08682798137397191,
+              "p95": 0.07689047619047623
+            }
+          }
+        },
+        {
+          "rep": 2,
+          "n_train": 197,
+          "n_test": 85,
+          "pos_rate_train": 0.3756345177664975,
+          "pos_rate_test": 0.3764705882352941,
+          "entropy_only": {
+            "logloss": 0.6592339623808026,
+            "auroc": 0.5501179245283019
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.669523428794968,
+            "auroc": 0.4946933962264151
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": -0.010142177267668947,
+              "p05": -0.027391917506751528,
+              "p95": 0.005883662072983083
+            },
+            "delta_auroc": {
+              "mean": -0.05720700769596835,
+              "p05": -0.19167907234008924,
+              "p95": 0.07096878488387931
+            }
+          }
+        },
+        {
+          "rep": 3,
+          "n_train": 197,
+          "n_test": 85,
+          "pos_rate_train": 0.3756345177664975,
+          "pos_rate_test": 0.3764705882352941,
+          "entropy_only": {
+            "logloss": 0.6756172190564639,
+            "auroc": 0.5212264150943396
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.6742867552327975,
+            "auroc": 0.5112028301886793
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": 0.0016783827573932301,
+              "p05": -0.003953081736846237,
+              "p95": 0.007261910470134788
+            },
+            "delta_auroc": {
+              "mean": -0.007690472081588707,
+              "p05": -0.061366622208235314,
+              "p95": 0.04124902082044933
+            }
+          }
+        },
+        {
+          "rep": 4,
+          "n_train": 197,
+          "n_test": 85,
+          "pos_rate_train": 0.3756345177664975,
+          "pos_rate_test": 0.3764705882352941,
+          "entropy_only": {
+            "logloss": 0.6587862099625968,
+            "auroc": 0.5961084905660378
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.6664199497523542,
+            "auroc": 0.4321933962264151
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": -0.007869001328667545,
+              "p05": -0.013776721481886843,
+              "p95": -0.002133864402479961
+            },
+            "delta_auroc": {
+              "mean": -0.16704897536123403,
+              "p05": -0.24648250933938617,
+              "p95": -0.08487184689254072
+            }
+          }
+        }
+      ],
+      "summary": {
+        "delta_logloss_mean_over_repeats": -0.004723124220615308,
+        "delta_auroc_mean_over_repeats": -0.06781631823958145
+      }
+    },
+    {
+      "run_id": "truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast",
+      "task": "truthfulqa_mc",
+      "model": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+      "chat_mode": "auto",
+      "quantization": "none",
+      "label": "hallucinated",
+      "n": 415,
+      "pos_rate": 0.7421686746987952,
+      "eval_mode": "holdout",
+      "test_frac": 0.3,
+      "repeats": 5,
+      "bootstrap": 300,
+      "per_repeat": [
+        {
+          "rep": 0,
+          "n_train": 291,
+          "n_test": 124,
+          "pos_rate_train": 0.7422680412371134,
+          "pos_rate_test": 0.7419354838709677,
+          "entropy_only": {
+            "logloss": 0.571061447196371,
+            "auroc": 0.5159646739130435
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.5712752904194333,
+            "auroc": 0.5074728260869565
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": -0.0001939760449653392,
+              "p05": -0.004433467611609382,
+              "p95": 0.004544696910996988
+            },
+            "delta_auroc": {
+              "mean": -0.009903415959422544,
+              "p05": -0.11674836601307187,
+              "p95": 0.11084263610370686
+            }
+          }
+        },
+        {
+          "rep": 1,
+          "n_train": 291,
+          "n_test": 124,
+          "pos_rate_train": 0.7422680412371134,
+          "pos_rate_test": 0.7419354838709677,
+          "entropy_only": {
+            "logloss": 0.5709316620682691,
+            "auroc": 0.5180027173913043
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.5936614277346335,
+            "auroc": 0.41202445652173914
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": -0.02228734610143594,
+              "p05": -0.042777717584895,
+              "p95": -0.003381891303897986
+            },
+            "delta_auroc": {
+              "mean": -0.10278128424970008,
+              "p05": -0.2487017945780832,
+              "p95": 0.04681209150326799
+            }
+          }
+        },
+        {
+          "rep": 2,
+          "n_train": 291,
+          "n_test": 124,
+          "pos_rate_train": 0.7422680412371134,
+          "pos_rate_test": 0.7419354838709677,
+          "entropy_only": {
+            "logloss": 0.5749940189668651,
+            "auroc": 0.42527173913043476
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.5744470862500111,
+            "auroc": 0.4398777173913043
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": 0.0005114012598967436,
+              "p05": -0.0015741457211087438,
+              "p95": 0.0024370710925215593
+            },
+            "delta_auroc": {
+              "mean": 0.01499441439874991,
+              "p05": -0.026686868686868693,
+              "p95": 0.05963125441739172
+            }
+          }
+        },
+        {
+          "rep": 3,
+          "n_train": 291,
+          "n_test": 124,
+          "pos_rate_train": 0.7422680412371134,
+          "pos_rate_test": 0.7419354838709677,
+          "entropy_only": {
+            "logloss": 0.5711813513708717,
+            "auroc": 0.4952445652173913
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.5717192413909935,
+            "auroc": 0.48777173913043476
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": -0.0007653031784982847,
+              "p05": -0.005336723868658394,
+              "p95": 0.0040502201986066366
+            },
+            "delta_auroc": {
+              "mean": -0.015911716036004737,
+              "p05": -0.13712450495932643,
+              "p95": 0.12103949381170913
+            }
+          }
+        },
+        {
+          "rep": 4,
+          "n_train": 291,
+          "n_test": 124,
+          "pos_rate_train": 0.7422680412371134,
+          "pos_rate_test": 0.7419354838709677,
+          "entropy_only": {
+            "logloss": 0.5726566966005404,
+            "auroc": 0.48879076086956524
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.5721354320323252,
+            "auroc": 0.4983016304347826
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": 0.0006420838798212971,
+              "p05": -0.0008397115521822151,
+              "p95": 0.002011765211200689
+            },
+            "delta_auroc": {
+              "mean": 0.013596531017462556,
+              "p05": -0.019861387257816786,
+              "p95": 0.0462366086628727
+            }
+          }
+        }
+      ],
+      "summary": {
+        "delta_logloss_mean_over_repeats": -0.004418628037036304,
+        "delta_auroc_mean_over_repeats": -0.020001094165782978
+      }
+    },
+    {
+      "run_id": "truthfulqa_mc__microsoft__phi-2__K4__qlast",
+      "task": "truthfulqa_mc",
+      "model": "microsoft/phi-2",
+      "chat_mode": "auto",
+      "quantization": "none",
+      "label": "hallucinated",
+      "n": 415,
+      "pos_rate": 0.5421686746987951,
+      "eval_mode": "holdout",
+      "test_frac": 0.3,
+      "repeats": 5,
+      "bootstrap": 300,
+      "per_repeat": [
+        {
+          "rep": 0,
+          "n_train": 290,
+          "n_test": 125,
+          "pos_rate_train": 0.5413793103448276,
+          "pos_rate_test": 0.544,
+          "entropy_only": {
+            "logloss": 0.6004698491131122,
+            "auroc": 0.7487100103199175
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.608420816053045,
+            "auroc": 0.7345201238390093
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": -0.007766014622063473,
+              "p05": -0.014521699042865705,
+              "p95": -0.00107061198107921
+            },
+            "delta_auroc": {
+              "mean": -0.013999551474261275,
+              "p05": -0.02744083956873461,
+              "p95": -0.0020633484162895788
+            }
+          }
+        },
+        {
+          "rep": 1,
+          "n_train": 290,
+          "n_test": 125,
+          "pos_rate_train": 0.5413793103448276,
+          "pos_rate_test": 0.544,
+          "entropy_only": {
+            "logloss": 0.6234034668145765,
+            "auroc": 0.6965944272445821
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.6246025509988433,
+            "auroc": 0.6968524251805985
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": -0.0008761860090834405,
+              "p05": -0.00486506268923777,
+              "p95": 0.0027819995396290553
+            },
+            "delta_auroc": {
+              "mean": 0.0007439816128218398,
+              "p05": -0.00830609131524468,
+              "p95": 0.00954078164755916
+            }
+          }
+        },
+        {
+          "rep": 2,
+          "n_train": 290,
+          "n_test": 125,
+          "pos_rate_train": 0.5413793103448276,
+          "pos_rate_test": 0.544,
+          "entropy_only": {
+            "logloss": 0.6316886033763456,
+            "auroc": 0.6818885448916409
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.6337495633477546,
+            "auroc": 0.6811145510835913
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": -0.0021572068197608734,
+              "p05": -0.007056410457812923,
+              "p95": 0.0026134859312210825
+            },
+            "delta_auroc": {
+              "mean": -0.0005081900171680194,
+              "p05": -0.009812957441040897,
+              "p95": 0.008711033407018
+            }
+          }
+        },
+        {
+          "rep": 3,
+          "n_train": 290,
+          "n_test": 125,
+          "pos_rate_train": 0.5413793103448276,
+          "pos_rate_test": 0.544,
+          "entropy_only": {
+            "logloss": 0.6144829337239743,
+            "auroc": 0.7200722394220846
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.6243395440234835,
+            "auroc": 0.7002063983488133
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": -0.010486208437243768,
+              "p05": -0.021063932000550418,
+              "p95": -0.0008561162050106734
+            },
+            "delta_auroc": {
+              "mean": -0.02105211043792008,
+              "p05": -0.04323296107809639,
+              "p95": -0.0012731587057010693
+            }
+          }
+        },
+        {
+          "rep": 4,
+          "n_train": 290,
+          "n_test": 125,
+          "pos_rate_train": 0.5413793103448276,
+          "pos_rate_test": 0.544,
+          "entropy_only": {
+            "logloss": 0.6934602852994225,
+            "auroc": 0.6026831785345718
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.6951325740406159,
+            "auroc": 0.6024251805985552
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": -0.0015981882451744723,
+              "p05": -0.004838863375855473,
+              "p95": 0.0021893008118976376
+            },
+            "delta_auroc": {
+              "mean": -0.00022241311318790517,
+              "p05": -0.008565262054507389,
+              "p95": 0.0069993958681870945
+            }
+          }
+        }
+      ],
+      "summary": {
+        "delta_logloss_mean_over_repeats": -0.004576760826665205,
+        "delta_auroc_mean_over_repeats": -0.00700765668594309
+      }
+    },
+    {
+      "run_id": "truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast",
+      "task": "truthfulqa_mc",
+      "model": "mistralai/Mistral-7B-Instruct-v0.3",
+      "chat_mode": "auto",
+      "quantization": "none",
+      "label": "hallucinated",
+      "n": 415,
+      "pos_rate": 0.42891566265060244,
+      "eval_mode": "holdout",
+      "test_frac": 0.3,
+      "repeats": 5,
+      "bootstrap": 300,
+      "per_repeat": [
+        {
+          "rep": 0,
+          "n_train": 291,
+          "n_test": 124,
+          "pos_rate_train": 0.42955326460481097,
+          "pos_rate_test": 0.4274193548387097,
+          "entropy_only": {
+            "logloss": 0.6818954184297179,
+            "auroc": 0.5562051554610683
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.6773677378937919,
+            "auroc": 0.5894233324475153
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": 0.004269915610468902,
+              "p05": -0.00045445823098154143,
+              "p95": 0.008347892759160105
+            },
+            "delta_auroc": {
+              "mean": 0.033022084534181796,
+              "p05": -0.011061732260191647,
+              "p95": 0.07553210530240882
+            }
+          }
+        },
+        {
+          "rep": 1,
+          "n_train": 291,
+          "n_test": 124,
+          "pos_rate_train": 0.42955326460481097,
+          "pos_rate_test": 0.4274193548387097,
+          "entropy_only": {
+            "logloss": 0.68124866138603,
+            "auroc": 0.6417751793781558
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.6771955272014802,
+            "auroc": 0.6710071751262291
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": 0.004095755510295868,
+              "p05": 0.0008229974893808334,
+              "p95": 0.00734461200654914
+            },
+            "delta_auroc": {
+              "mean": 0.029733004193370067,
+              "p05": 0.004197156057138801,
+              "p95": 0.05927439458689457
+            }
+          }
+        },
+        {
+          "rep": 2,
+          "n_train": 291,
+          "n_test": 124,
+          "pos_rate_train": 0.42955326460481097,
+          "pos_rate_test": 0.4274193548387097,
+          "entropy_only": {
+            "logloss": 0.6593552719608512,
+            "auroc": 0.5636460271060324
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.6760013457961619,
+            "auroc": 0.5936752591017805
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": -0.017992527354208813,
+              "p05": -0.04142212089700462,
+              "p95": 0.001550877052201633
+            },
+            "delta_auroc": {
+              "mean": 0.029888118019998657,
+              "p05": -0.021110902255639087,
+              "p95": 0.08813697682462815
+            }
+          }
+        },
+        {
+          "rep": 3,
+          "n_train": 291,
+          "n_test": 124,
+          "pos_rate_train": 0.42955326460481097,
+          "pos_rate_test": 0.4274193548387097,
+          "entropy_only": {
+            "logloss": 0.6557658050340869,
+            "auroc": 0.630348126494818
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.6606204725968645,
+            "auroc": 0.6332713260696253
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": -0.00420012161046117,
+              "p05": -0.018200732340092677,
+              "p95": 0.0124548217344605
+            },
+            "delta_auroc": {
+              "mean": 0.004541932680076097,
+              "p05": -0.044060346060346055,
+              "p95": 0.057634845174117585
+            }
+          }
+        },
+        {
+          "rep": 4,
+          "n_train": 291,
+          "n_test": 124,
+          "pos_rate_train": 0.42955326460481097,
+          "pos_rate_test": 0.4274193548387097,
+          "entropy_only": {
+            "logloss": 0.6399337332716731,
+            "auroc": 0.7018336433696519
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.6501385432100732,
+            "auroc": 0.6412436885463726
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": -0.009731929779667067,
+              "p05": -0.025807723512041504,
+              "p95": 0.006132941401999531
+            },
+            "delta_auroc": {
+              "mean": -0.06256988937106824,
+              "p05": -0.12051626644478222,
+              "p95": 0.0046591080876795385
+            }
+          }
+        }
+      ],
+      "summary": {
+        "delta_logloss_mean_over_repeats": -0.004711781524714456,
+        "delta_auroc_mean_over_repeats": 0.0069230500113116765
+      }
+    },
+    {
+      "run_id": "truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast",
+      "task": "truthfulqa_mc",
+      "model": "mistralai/Mistral-Nemo-Instruct-2407",
+      "chat_mode": "auto",
+      "quantization": "none",
+      "label": "hallucinated",
+      "n": 415,
+      "pos_rate": 0.40481927710843374,
+      "eval_mode": "holdout",
+      "test_frac": 0.3,
+      "repeats": 5,
+      "bootstrap": 300,
+      "per_repeat": [
+        {
+          "rep": 0,
+          "n_train": 291,
+          "n_test": 124,
+          "pos_rate_train": 0.4054982817869416,
+          "pos_rate_test": 0.4032258064516129,
+          "entropy_only": {
+            "logloss": 0.6441538356276153,
+            "auroc": 0.6581081081081082
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.6481415348402629,
+            "auroc": 0.6483783783783784
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": -0.0036181193292210913,
+              "p05": -0.011695087219432198,
+              "p95": 0.004857871043975051
+            },
+            "delta_auroc": {
+              "mean": -0.008616395137867784,
+              "p05": -0.02990855209605206,
+              "p95": 0.0120924313594466
+            }
+          }
+        },
+        {
+          "rep": 1,
+          "n_train": 291,
+          "n_test": 124,
+          "pos_rate_train": 0.4054982817869416,
+          "pos_rate_test": 0.4032258064516129,
+          "entropy_only": {
+            "logloss": 0.6432669029595218,
+            "auroc": 0.6927027027027027
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.6443201200236841,
+            "auroc": 0.6905405405405406
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": -0.0010370986992950747,
+              "p05": -0.0020309002937180854,
+              "p95": -7.316591238523669e-05
+            },
+            "delta_auroc": {
+              "mean": -0.0019653392724688647,
+              "p05": -0.00659608500073141,
+              "p95": 0.0022123871825043
+            }
+          }
+        },
+        {
+          "rep": 2,
+          "n_train": 291,
+          "n_test": 124,
+          "pos_rate_train": 0.4054982817869416,
+          "pos_rate_test": 0.4032258064516129,
+          "entropy_only": {
+            "logloss": 0.6119869970045441,
+            "auroc": 0.74
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.6123232153033356,
+            "auroc": 0.744054054054054
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": -0.00027460631691325843,
+              "p05": -0.00670262658588075,
+              "p95": 0.006261782577979275
+            },
+            "delta_auroc": {
+              "mean": 0.003644230066271111,
+              "p05": -0.018796180817457438,
+              "p95": 0.02594937705655704
+            }
+          }
+        },
+        {
+          "rep": 3,
+          "n_train": 291,
+          "n_test": 124,
+          "pos_rate_train": 0.4054982817869416,
+          "pos_rate_test": 0.4032258064516129,
+          "entropy_only": {
+            "logloss": 0.6095661059736538,
+            "auroc": 0.7491891891891892
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.6106570945711098,
+            "auroc": 0.744054054054054
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": -0.0011458046982768869,
+              "p05": -0.006628764852026686,
+              "p95": 0.004989019194051214
+            },
+            "delta_auroc": {
+              "mean": -0.005778364992994899,
+              "p05": -0.02369178541822914,
+              "p95": 0.012673705013521986
+            }
+          }
+        },
+        {
+          "rep": 4,
+          "n_train": 291,
+          "n_test": 124,
+          "pos_rate_train": 0.4054982817869416,
+          "pos_rate_test": 0.4032258064516129,
+          "entropy_only": {
+            "logloss": 0.62017065571924,
+            "auroc": 0.7008108108108108
+          },
+          "entropy_plus_sink": {
+            "logloss": 0.628182786958422,
+            "auroc": 0.7005405405405405
+          },
+          "bootstrap": {
+            "delta_logloss": {
+              "mean": -0.008064772141783215,
+              "p05": -0.02169763805996276,
+              "p95": 0.004826283288088222
+            },
+            "delta_auroc": {
+              "mean": 0.0001441217231836874,
+              "p05": -0.034564854369841524,
+              "p95": 0.03722019300144302
+            }
+          }
+        }
+      ],
+      "summary": {
+        "delta_logloss_mean_over_repeats": -0.0028280802370979053,
+        "delta_auroc_mean_over_repeats": -0.00251434952277535
+      }
+    }
+  ],
+  "inputs": [
+    "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/data/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/data/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/data/truthfulqa_mc__Qwen__Qwen2.5-1.5B-Instruct__K4__qlast.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/data/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/data/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/data/truthfulqa_mc__microsoft__phi-2__K4__qlast.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/data/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H3_added_value_entropy/data/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast.jsonl.gz"
+  ],
+  "note": "Per-run evaluation (per model). Holdout: fit on train, evaluate on test. Bootstrap deltas computed on test predictions.",
+  "generated_at": 1769718060.586943,
+  "summary": {
+    "delta_logloss_mean_over_runs": -0.002893597682185911,
+    "delta_auroc_mean_over_runs": -0.012373509603887748,
+    "n_runs_used": 7
+  }
+}

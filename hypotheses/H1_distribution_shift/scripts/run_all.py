@@ -13,6 +13,12 @@ from typing import Any, Dict, List
 
 import numpy as np
 
+from hypotheses._lib.analysis_ext import (
+    plot_aggregate_summary_table,
+    plot_basic_run_diagnostics,
+    plot_signflip_and_effects,
+    summarize_run,
+)
 from hypotheses._lib.io import ensure_dir, list_run_files, load_runs, read_json, require_keys, write_json
 from hypotheses._lib.metrics import choose_label, cohens_d
 from hypotheses._lib.repo import find_repo_root
@@ -75,9 +81,11 @@ def main() -> None:
     plot_items: List[Dict[str, Any]] = []
     for spec in cfg.get("plots", []):
         out = ensure_dir(plots_dir / str(spec["out_subdir"]))
-        run_plot_script(repo_root, str(spec["script"]), inputs=inputs, out_dir=out, extra_args=list(spec.get("extra_args", [])))
-        plot_items.append({"script": spec["script"], "out_dir": str(out), "extra_args": spec.get("extra_args", [])})
-    _update_plots_manifest(plots_dir, inputs=inputs, items=plot_items)
+        try:
+            run_plot_script(repo_root, str(spec["script"]), inputs=inputs, out_dir=out, extra_args=list(spec.get("extra_args", [])))
+            plot_items.append({"script": spec["script"], "out_dir": str(out), "extra_args": spec.get("extra_args", [])})
+        except Exception as e:
+            plot_items.append({"script": spec["script"], "out_dir": str(out), "extra_args": spec.get("extra_args", []), "error": repr(e)})
 
     # metrics per run (Cohen's d)
     metrics = []
@@ -106,11 +114,34 @@ def main() -> None:
 
     write_json(plots_dir / "metrics.json", {"metrics": metrics})
 
+    # Extra local-only analysis: per-run diagnostics + aggregate summaries.
+    per_run_summaries = []
+    extra_items: List[Dict[str, Any]] = []
+    runs_out_dir = ensure_dir(plots_dir / "runs")
+    for run in runs:
+        rid = run.path.name.replace(".jsonl.gz", "")
+        per_run_summaries.append(summarize_run(run.rows, run_id=rid, label_mode=args.label))
+        extra_items.extend(plot_basic_run_diagnostics(run.rows, runs_out_dir / rid, title=rid, label_mode=args.label))
+
+    agg_dir = ensure_dir(plots_dir / "agg")
+    summary_csv = plot_aggregate_summary_table(per_run_summaries, agg_dir)
+    extra_items.append({"kind": "table", "path": str(summary_csv), "desc": "Per-run summary table (csv)."})
+    # Intentionally: no generic cross-run diagnostics in agg/ (only hypothesis-specific aggregations).
+
+    _update_plots_manifest(plots_dir, inputs=inputs, items=[*plot_items, *extra_items])
+
     # aggregated text
     ds = [m["cohens_d"] for m in metrics if np.isfinite(m["cohens_d"])]
     n_pos = sum(1 for d in ds if d > 0)
     n_neg = sum(1 for d in ds if d < 0)
-    md = f"""# H1 — Distribution shift (auto)\n\n## Claim being tested\nSink mass distribution differs between positive class (hallucinated/incorrect) and negative (non-hallucinated/correct).\n\n## What was run\n- runs: {len(metrics)}\n- label: `{metrics[0]['label'] if metrics else args.label}`\n\n## Results (Cohen's d)\n- finite d: {len(ds)}\n- sign breakdown: {n_pos} positive, {n_neg} negative\n\nPer-run table is in `{plots_dir / 'metrics.json'}`.\n\n## Plots\nSee `{plots_dir}` (manifest: `{plots_dir / 'manifest.json'}`)\n\n## Status\n- outcome: **preliminary** (depends on sign stability across models/tasks)\n"""
+    finite = [m for m in metrics if np.isfinite(m["cohens_d"])]
+    finite.sort(key=lambda m: float(m["cohens_d"]))
+    top_neg = finite[:3]
+    top_pos = list(reversed(finite[-3:])) if finite else []
+    top_neg_str = "\n".join([f"- {m['model']}: d={float(m['cohens_d']):+.3f} (n={int(m['n'])}, pos_rate={float(m['pos_rate']):.3f})" for m in top_neg]) if top_neg else "- (none)"
+    top_pos_str = "\n".join([f"- {m['model']}: d={float(m['cohens_d']):+.3f} (n={int(m['n'])}, pos_rate={float(m['pos_rate']):.3f})" for m in top_pos]) if top_pos else "- (none)"
+
+    md = f"""# H1 — Distribution shift (auto)\n\n## Claim being tested\nSink mass distribution differs between positive class (hallucinated/incorrect) and negative (non-hallucinated/correct).\n\n## What was run\n- runs: {len(metrics)}\n- label: `{metrics[0]['label'] if metrics else args.label}`\n\n## Results (Cohen's d)\n- finite d: {len(ds)}\n- sign breakdown: {n_pos} positive, {n_neg} negative\n\n### Strongest effects (by d)\nMost negative (pos < neg):\n{top_neg_str}\n\nMost positive (pos > neg):\n{top_pos_str}\n\n## Artifacts\n- per-run table: `plots/metrics.json`\n- manifest: `plots/manifest.json`\n\n## Plots\n- baseline: `plots/h1/` and `plots/h1_heatmap/`\n- per-run diagnostics: `plots/runs/`\n- aggregate analysis: `plots/agg/` (table: `{summary_csv.name}`)\n\n## Status\n- outcome: **preliminary** (sign can flip across models; treat as a heterogeneity finding, not a single universal monotone law)\n"""
     (hyp_dir / "final.md").write_text(md, encoding="utf-8")
 
 

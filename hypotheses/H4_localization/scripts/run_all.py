@@ -13,6 +13,14 @@ from typing import Any, Dict, List, Tuple
 
 import numpy as np
 
+from hypotheses._lib.analysis_ext import (
+    plot_aggregate_summary_table,
+    plot_aggregate_layer_profiles,
+    plot_basic_run_diagnostics,
+    plot_signflip_and_effects,
+    plot_top_heads_summary,
+    summarize_run,
+)
 from hypotheses._lib.io import ensure_dir, list_run_files, load_runs, read_json, require_keys, write_json
 from hypotheses._lib.metrics import choose_label
 from hypotheses._lib.repo import find_repo_root
@@ -113,8 +121,11 @@ def main() -> None:
     plot_items: List[Dict[str, Any]] = []
     for spec in cfg.get("plots", []):
         out = ensure_dir(plots_dir / str(spec["out_subdir"]))
-        run_plot_script(repo_root, str(spec["script"]), inputs=inputs, out_dir=out, extra_args=list(spec.get("extra_args", [])))
-        plot_items.append({"script": spec["script"], "out_dir": str(out), "extra_args": spec.get("extra_args", [])})
+        try:
+            run_plot_script(repo_root, str(spec["script"]), inputs=inputs, out_dir=out, extra_args=list(spec.get("extra_args", [])))
+            plot_items.append({"script": spec["script"], "out_dir": str(out), "extra_args": spec.get("extra_args", [])})
+        except Exception as e:
+            plot_items.append({"script": spec["script"], "out_dir": str(out), "extra_args": spec.get("extra_args", []), "error": repr(e)})
     write_json(plots_dir / "manifest.json", {"hypothesis_id": "H4_localization", "generated_at": time.time(), "inputs": [str(p) for p in inputs], "items": plot_items})
 
     # Compute delta maps + top heads per run
@@ -135,7 +146,45 @@ def main() -> None:
         )
     write_json(plots_dir / "metrics.json", {"metrics": metrics})
 
-    md = f"""# H4 — Localization (auto)\n\n## Claim being tested\nThe sink/label effect is localized to specific layers/heads (not uniform).\n\n## What was run\n- runs: {len(metrics)}\n- inputs: {len(inputs)} file(s)\n\n## Results\nTop heads by |Δ sink| per run are in `{plots_dir / 'metrics.json'}`.\n\n## Plots\n- heatmaps: `{plots_dir / 'h1_heatmap'}`\n- layer profiles: `{plots_dir / 'layers'}`\n\n## Status\n- outcome: **preliminary** (depends on stability across models/tasks)\n"""
+    # Extra local-only analysis: per-run diagnostics + aggregate summaries.
+    per_run_summaries = []
+    extra_items: List[Dict[str, Any]] = []
+    runs_out_dir = ensure_dir(plots_dir / "runs")
+    for run in runs:
+        rid = run.path.name.replace(".jsonl.gz", "")
+        per_run_summaries.append(summarize_run(run.rows, run_id=rid, label_mode=args.label))
+        extra_items.extend(plot_basic_run_diagnostics(run.rows, runs_out_dir / rid, title=rid, label_mode=args.label))
+
+    agg_dir = ensure_dir(plots_dir / "agg")
+    summary_csv = plot_aggregate_summary_table(per_run_summaries, agg_dir)
+    extra_items.append({"kind": "table", "path": str(summary_csv), "desc": "Per-run summary table (csv)."})
+    # Intentionally: no generic cross-run diagnostics in agg/ (only hypothesis-specific aggregations).
+    # H4-specific aggregates
+    extra_items.extend(plot_top_heads_summary(metrics, agg_dir, title="H4 aggregate — top heads"))
+    extra_items.extend(
+        plot_aggregate_layer_profiles([(s.run_id, run.rows) for s, run in zip(per_run_summaries, runs)], agg_dir, title="H4 aggregate — layer profiles", label_mode=args.label)
+    )
+
+    # Re-write manifest to include extra analysis outputs as well.
+    write_json(
+        plots_dir / "manifest.json",
+        {
+            "hypothesis_id": "H4_localization",
+            "generated_at": time.time(),
+            "inputs": [str(p) for p in inputs],
+            "items": [
+                *plot_items,
+                {"kind": "metrics", "path": str(plots_dir / "metrics.json"), "desc": "Top heads per run."},
+                *extra_items,
+            ],
+        },
+    )
+
+    finite_d = [s for s in per_run_summaries if np.isfinite(s.cohens_d_sink_pos_minus_neg)]
+    top_abs_d = sorted(finite_d, key=lambda s: abs(float(s.cohens_d_sink_pos_minus_neg)), reverse=True)[:3]
+    top_abs_d_str = "\n".join([f"- {s.task} / {s.model}: d={float(s.cohens_d_sink_pos_minus_neg):+.3f} (n={s.n})" for s in top_abs_d]) if top_abs_d else "- (none)"
+
+    md = f"""# H4 — Localization (auto)\n\n## Claim being tested\nThe sink/label effect is localized to specific layers/heads (not uniform).\n\n## What was run\n- runs: {len(metrics)}\n- inputs: {len(inputs)} file(s)\n\n## Results\nTop heads by |Δ sink| per run are in `plots/metrics.json`.\n\nLargest |Cohen's d| across runs (overall sink_mass shift):\n{top_abs_d_str}\n\n## Plots\n- heatmaps: `plots/h1_heatmap/`\n- layer profiles: `plots/layers/`\n\n## Extra diagnostics\n- per-run: `plots/runs/`\n- aggregate: `plots/agg/` (table: `{summary_csv.name}`)\n\n## Status\n- outcome: **preliminary** (depends on stability across models/tasks)\n"""
     (hyp_dir / "final.md").write_text(md, encoding="utf-8")
 
 
