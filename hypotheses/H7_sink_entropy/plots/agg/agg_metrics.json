@@ -1,0 +1,60 @@
+{
+  "hypothesis_id": "H7_sink_entropy",
+  "source": "/home/jupyter/project/sinks/hypotheses/H7_sink_entropy/plots/metrics.csv",
+  "n_rows": 26,
+  "n_models": 7,
+  "keys": [
+    {
+      "key": {
+        "task": "truthfulqa_mc",
+        "sink_tokens": 1,
+        "query_mode": "last",
+        "query_start": 0,
+        "chat_mode": "auto"
+      },
+      "n_models": 7,
+      "median_spearman": -0.027386429886068025,
+      "median_pearson": 0.026337376705150312,
+      "median_partial_seq_len": -0.041788998085762356
+    },
+    {
+      "key": {
+        "task": "truthfulqa_mc",
+        "sink_tokens": 1,
+        "query_mode": "range",
+        "query_start": 32,
+        "chat_mode": "auto"
+      },
+      "n_models": 6,
+      "median_spearman": 0.024555748075915703,
+      "median_pearson": 0.011172024107891124,
+      "median_partial_seq_len": 0.0011152693248009746
+    },
+    {
+      "key": {
+        "task": "truthfulqa_mc",
+        "sink_tokens": 4,
+        "query_mode": "last",
+        "query_start": 0,
+        "chat_mode": "auto"
+      },
+      "n_models": 7,
+      "median_spearman": -0.0653935138547501,
+      "median_pearson": -0.06514808877594898,
+      "median_partial_seq_len": -0.1296889639497817
+    },
+    {
+      "key": {
+        "task": "truthfulqa_mc",
+        "sink_tokens": 4,
+        "query_mode": "range",
+        "query_start": 32,
+        "chat_mode": "auto"
+      },
+      "n_models": 6,
+      "median_spearman": 0.0242449732038522,
+      "median_pearson": 0.02030079447772777,
+      "median_partial_seq_len": -0.010646966023222067
+    }
+  ]
+}

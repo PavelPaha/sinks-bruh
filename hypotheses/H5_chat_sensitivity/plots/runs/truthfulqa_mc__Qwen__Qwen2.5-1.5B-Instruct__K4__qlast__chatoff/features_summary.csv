@@ -1,0 +1,4 @@
+auroc_feature_vs_label,corr_spearman_with_entropy,corr_spearman_with_seq_len,corr_spearman_with_sink,feature,frac_missing,label,mean,n,n_finite,std
+nan,nan,nan,nan,entropy,1.0,hallucinated,nan,415,0,nan
+0.5512562332182586,nan,1.0,nan,seq_len,0.0,hallucinated,68.70843373493976,415,415,16.69757362662891
+nan,nan,nan,nan,sink_mass,1.0,hallucinated,nan,415,0,nan

@@ -1,0 +1,19 @@
+# H7 — Run notes
+
+- status: `pending`
+- last updated: 2026-01-29
+
+## What I ran
+- (fill) runtime: cloud / local
+- (fill) GPU: ...
+- (fill) HF_HOME: ...
+- config: `hypotheses/H7_sink_entropy/config.json`
+
+## Quick sanity checks
+- number of run files: ...
+- number of models completed: ...
+- any skipped models (gated / disk / missing deps): ...
+
+## Observations
+- ...
+

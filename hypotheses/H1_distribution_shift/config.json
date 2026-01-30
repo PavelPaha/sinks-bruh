@@ -1,0 +1,122 @@
+{
+  "measurements": [
+    {
+      "task": "truthfulqa_mc",
+      "split": "validation",
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "samples": 500,
+      "seed": 42,
+      "sink_tokens": 4,
+      "query_mode": "last",
+      "query_start": 0,
+      "chat": "auto",
+      "device": "cuda",
+      "quantization": "none"
+    }
+    ,
+    {
+      "task": "truthfulqa_mc",
+      "split": "validation",
+      "model": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+      "samples": 500,
+      "seed": 42,
+      "sink_tokens": 4,
+      "query_mode": "last",
+      "query_start": 0,
+      "chat": "auto",
+      "device": "cuda",
+      "quantization": "none"
+    },
+    {
+      "task": "truthfulqa_mc",
+      "split": "validation",
+      "model": "Qwen/Qwen2.5-1.5B-Instruct",
+      "samples": 500,
+      "seed": 42,
+      "sink_tokens": 4,
+      "query_mode": "last",
+      "query_start": 0,
+      "chat": "auto",
+      "device": "cuda",
+      "quantization": "none"
+    },
+    {
+      "task": "truthfulqa_mc",
+      "split": "validation",
+      "model": "EleutherAI/pythia-2.8b-deduped",
+      "samples": 500,
+      "seed": 42,
+      "sink_tokens": 4,
+      "query_mode": "last",
+      "query_start": 0,
+      "chat": "auto",
+      "device": "cuda",
+      "quantization": "none"
+    },
+    {
+      "task": "truthfulqa_mc",
+      "split": "validation",
+      "model": "microsoft/phi-2",
+      "samples": 500,
+      "seed": 42,
+      "sink_tokens": 4,
+      "query_mode": "last",
+      "query_start": 0,
+      "chat": "auto",
+      "device": "cuda",
+      "quantization": "none"
+    },
+    {
+      "task": "truthfulqa_mc",
+      "split": "validation",
+      "model": "Qwen/Qwen2.5-7B-Instruct",
+      "samples": 500,
+      "seed": 42,
+      "sink_tokens": 4,
+      "query_mode": "last",
+      "query_start": 0,
+      "chat": "auto",
+      "device": "cuda",
+      "quantization": "none"
+    },
+    {
+      "task": "truthfulqa_mc",
+      "split": "validation",
+      "model": "mistralai/Mistral-7B-Instruct-v0.3",
+      "samples": 500,
+      "seed": 42,
+      "sink_tokens": 4,
+      "query_mode": "last",
+      "query_start": 0,
+      "chat": "auto",
+      "device": "cuda",
+      "quantization": "none"
+    },
+    {
+      "task": "truthfulqa_mc",
+      "split": "validation",
+      "model": "mistralai/Mistral-Nemo-Instruct-2407",
+      "samples": 500,
+      "seed": 42,
+      "sink_tokens": 4,
+      "query_mode": "last",
+      "query_start": 0,
+      "chat": "auto",
+      "device": "cuda",
+      "quantization": "none"
+    }
+  ],
+  "plots": [
+    {
+      "script": "plot_h1.py",
+      "out_subdir": "h1",
+      "extra_args": ["--label", "auto"]
+    },
+    {
+      "script": "plot_h1_heatmap.py",
+      "out_subdir": "h1_heatmap",
+      "extra_args": ["--label", "auto"]
+    }
+  ]
+}
+

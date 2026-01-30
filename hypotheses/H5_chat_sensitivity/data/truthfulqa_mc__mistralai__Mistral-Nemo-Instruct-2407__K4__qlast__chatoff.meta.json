@@ -1,0 +1,21 @@
+{
+  "task": "truthfulqa_mc",
+  "dataset": "truthful_qa",
+  "subset": "multiple_choice",
+  "split": "validation",
+  "model": "mistralai/Mistral-Nemo-Instruct-2407",
+  "revision": null,
+  "samples": 500,
+  "seed": 42,
+  "truthfulqa_mc_policy": "sample4",
+  "sink_tokens": 4,
+  "query_mode": "last",
+  "query_start": 0,
+  "chat": "off",
+  "quantization": "none",
+  "device": "cuda",
+  "cuda_visible_devices": null,
+  "transformers_version": "4.44.2",
+  "torch_version": "2.0.1+cu118",
+  "timestamp": 1769707557.7089455
+}

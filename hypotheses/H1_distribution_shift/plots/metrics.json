@@ -1,0 +1,108 @@
+{
+  "metrics": [
+    {
+      "run": "truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast.jsonl.gz",
+      "task": "truthfulqa_mc",
+      "model": "EleutherAI/pythia-2.8b-deduped",
+      "chat_mode": "auto",
+      "quantization": "none",
+      "label": "hallucinated",
+      "n": 415,
+      "pos_rate": 0.7662650602409639,
+      "cohens_d": -0.010218135889319115,
+      "mean_pos": 0.25416857820445726,
+      "mean_neg": 0.2543187310472707
+    },
+    {
+      "run": "truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast.jsonl.gz",
+      "task": "truthfulqa_mc",
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "chat_mode": "auto",
+      "quantization": "none",
+      "label": "hallucinated",
+      "n": 415,
+      "pos_rate": 0.7373493975903614,
+      "cohens_d": 0.16878447094657684,
+      "mean_pos": 0.36441362837611835,
+      "mean_neg": 0.3631767511380817
+    },
+    {
+      "run": "truthfulqa_mc__Qwen__Qwen2.5-1.5B-Instruct__K4__qlast.jsonl.gz",
+      "task": "truthfulqa_mc",
+      "model": "Qwen/Qwen2.5-1.5B-Instruct",
+      "chat_mode": "auto",
+      "quantization": "none",
+      "label": "hallucinated",
+      "n": 415,
+      "pos_rate": 0.7614457831325301,
+      "cohens_d": NaN,
+      "mean_pos": NaN,
+      "mean_neg": NaN
+    },
+    {
+      "run": "truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast.jsonl.gz",
+      "task": "truthfulqa_mc",
+      "model": "Qwen/Qwen2.5-7B-Instruct",
+      "chat_mode": "auto",
+      "quantization": "none",
+      "label": "hallucinated",
+      "n": 415,
+      "pos_rate": 0.5060240963855421,
+      "cohens_d": NaN,
+      "mean_pos": NaN,
+      "mean_neg": NaN
+    },
+    {
+      "run": "truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast.jsonl.gz",
+      "task": "truthfulqa_mc",
+      "model": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+      "chat_mode": "auto",
+      "quantization": "none",
+      "label": "hallucinated",
+      "n": 415,
+      "pos_rate": 0.7421686746987952,
+      "cohens_d": -0.05092423056624354,
+      "mean_pos": 0.391121203232108,
+      "mean_neg": 0.3913468670775717
+    },
+    {
+      "run": "truthfulqa_mc__microsoft__phi-2__K4__qlast.jsonl.gz",
+      "task": "truthfulqa_mc",
+      "model": "microsoft/phi-2",
+      "chat_mode": "auto",
+      "quantization": "none",
+      "label": "hallucinated",
+      "n": 415,
+      "pos_rate": 0.5421686746987951,
+      "cohens_d": -0.12527470164145882,
+      "mean_pos": 0.26595501822290113,
+      "mean_neg": 0.26704870578342754
+    },
+    {
+      "run": "truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast.jsonl.gz",
+      "task": "truthfulqa_mc",
+      "model": "mistralai/Mistral-7B-Instruct-v0.3",
+      "chat_mode": "auto",
+      "quantization": "none",
+      "label": "hallucinated",
+      "n": 415,
+      "pos_rate": 0.42891566265060244,
+      "cohens_d": -0.20468561645300648,
+      "mean_pos": 0.5720180884416325,
+      "mean_neg": 0.573620841802316
+    },
+    {
+      "run": "truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast.jsonl.gz",
+      "task": "truthfulqa_mc",
+      "model": "mistralai/Mistral-Nemo-Instruct-2407",
+      "chat_mode": "auto",
+      "quantization": "none",
+      "label": "hallucinated",
+      "n": 415,
+      "pos_rate": 0.40481927710843374,
+      "cohens_d": -0.10492797438372656,
+      "mean_pos": 0.5022027108737911,
+      "mean_neg": 0.5030319844140683
+    }
+  ]
+}

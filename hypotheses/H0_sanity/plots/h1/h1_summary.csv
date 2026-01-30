@@ -1,0 +1,2 @@
+task,model,quantization,chat_mode,cohens_d,n_pos,n_neg
+mmlu,Qwen/Qwen2.5-0.5B-Instruct,none,auto,0.12096000372457653,66,34

@@ -1,0 +1,596 @@
+{
+  "metrics": [
+    {
+      "run": "truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast.jsonl.gz",
+      "task": "truthfulqa_mc",
+      "model": "EleutherAI/pythia-2.8b-deduped",
+      "chat_mode": "auto",
+      "quantization": "none",
+      "label": "hallucinated",
+      "shape": [
+        32,
+        32
+      ],
+      "top10": [
+        {
+          "layer": 26,
+          "head": 25,
+          "delta": -0.037244242514369336,
+          "abs_delta": 0.037244242514369336
+        },
+        {
+          "layer": 20,
+          "head": 0,
+          "delta": -0.03536607784874929,
+          "abs_delta": 0.03536607784874929
+        },
+        {
+          "layer": 31,
+          "head": 31,
+          "delta": -0.03504549506101251,
+          "abs_delta": 0.03504549506101251
+        },
+        {
+          "layer": 31,
+          "head": 10,
+          "delta": -0.03503767852420547,
+          "abs_delta": 0.03503767852420547
+        },
+        {
+          "layer": 24,
+          "head": 6,
+          "delta": 0.0343875168018796,
+          "abs_delta": 0.0343875168018796
+        },
+        {
+          "layer": 31,
+          "head": 30,
+          "delta": -0.0333499569845116,
+          "abs_delta": 0.0333499569845116
+        },
+        {
+          "layer": 31,
+          "head": 26,
+          "delta": -0.03295179093725786,
+          "abs_delta": 0.03295179093725786
+        },
+        {
+          "layer": 31,
+          "head": 5,
+          "delta": -0.03266096155304765,
+          "abs_delta": 0.03266096155304765
+        },
+        {
+          "layer": 24,
+          "head": 16,
+          "delta": 0.03199227184302639,
+          "abs_delta": 0.03199227184302639
+        },
+        {
+          "layer": 31,
+          "head": 6,
+          "delta": -0.031907959762872085,
+          "abs_delta": 0.031907959762872085
+        }
+      ]
+    },
+    {
+      "run": "truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast.jsonl.gz",
+      "task": "truthfulqa_mc",
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "chat_mode": "auto",
+      "quantization": "none",
+      "label": "hallucinated",
+      "shape": [
+        24,
+        14
+      ],
+      "top10": [
+        {
+          "layer": 18,
+          "head": 0,
+          "delta": 0.024466283754771445,
+          "abs_delta": 0.024466283754771445
+        },
+        {
+          "layer": 21,
+          "head": 6,
+          "delta": 0.02418950009762033,
+          "abs_delta": 0.02418950009762033
+        },
+        {
+          "layer": 16,
+          "head": 3,
+          "delta": 0.024160572292993898,
+          "abs_delta": 0.024160572292993898
+        },
+        {
+          "layer": 16,
+          "head": 6,
+          "delta": 0.021525489736777037,
+          "abs_delta": 0.021525489736777037
+        },
+        {
+          "layer": 21,
+          "head": 8,
+          "delta": 0.021234379100550815,
+          "abs_delta": 0.021234379100550815
+        },
+        {
+          "layer": 16,
+          "head": 7,
+          "delta": 0.01958570235630601,
+          "abs_delta": 0.01958570235630601
+        },
+        {
+          "layer": 20,
+          "head": 12,
+          "delta": 0.019169155330246823,
+          "abs_delta": 0.019169155330246823
+        },
+        {
+          "layer": 18,
+          "head": 1,
+          "delta": 0.016423484568845514,
+          "abs_delta": 0.016423484568845514
+        },
+        {
+          "layer": 16,
+          "head": 2,
+          "delta": 0.015868931481568982,
+          "abs_delta": 0.015868931481568982
+        },
+        {
+          "layer": 21,
+          "head": 10,
+          "delta": 0.014458959212854783,
+          "abs_delta": 0.014458959212854783
+        }
+      ]
+    },
+    {
+      "run": "truthfulqa_mc__Qwen__Qwen2.5-1.5B-Instruct__K4__qlast.jsonl.gz",
+      "task": "truthfulqa_mc",
+      "model": "Qwen/Qwen2.5-1.5B-Instruct",
+      "chat_mode": "auto",
+      "quantization": "none",
+      "label": "hallucinated",
+      "shape": [
+        28,
+        12
+      ],
+      "top10": [
+        {
+          "layer": 0,
+          "head": 2,
+          "delta": -0.0010256600180270983,
+          "abs_delta": 0.0010256600180270983
+        },
+        {
+          "layer": 0,
+          "head": 0,
+          "delta": -0.0006948648157090453,
+          "abs_delta": 0.0006948648157090453
+        },
+        {
+          "layer": 0,
+          "head": 7,
+          "delta": 0.0004763143962796257,
+          "abs_delta": 0.0004763143962796257
+        },
+        {
+          "layer": 0,
+          "head": 4,
+          "delta": -0.00047566373700940606,
+          "abs_delta": 0.00047566373700940606
+        },
+        {
+          "layer": 0,
+          "head": 9,
+          "delta": 7.899691040079058e-05,
+          "abs_delta": 7.899691040079058e-05
+        },
+        {
+          "layer": 0,
+          "head": 11,
+          "delta": 7.820066520433395e-05,
+          "abs_delta": 7.820066520433395e-05
+        },
+        {
+          "layer": 0,
+          "head": 5,
+          "delta": 2.4453506660559012e-05,
+          "abs_delta": 2.4453506660559012e-05
+        },
+        {
+          "layer": 0,
+          "head": 8,
+          "delta": 2.2475157929052096e-05,
+          "abs_delta": 2.2475157929052096e-05
+        },
+        {
+          "layer": 0,
+          "head": 10,
+          "delta": 6.047840420813563e-07,
+          "abs_delta": 6.047840420813563e-07
+        },
+        {
+          "layer": 0,
+          "head": 6,
+          "delta": -3.2556207874153307e-07,
+          "abs_delta": 3.2556207874153307e-07
+        }
+      ]
+    },
+    {
+      "run": "truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast.jsonl.gz",
+      "task": "truthfulqa_mc",
+      "model": "Qwen/Qwen2.5-7B-Instruct",
+      "chat_mode": "auto",
+      "quantization": "none",
+      "label": "hallucinated",
+      "shape": [
+        28,
+        28
+      ],
+      "top10": [
+        {
+          "layer": 20,
+          "head": 5,
+          "delta": -0.10212920971309958,
+          "abs_delta": 0.10212920971309958
+        },
+        {
+          "layer": 20,
+          "head": 15,
+          "delta": 0.049644671202259794,
+          "abs_delta": 0.049644671202259794
+        },
+        {
+          "layer": 26,
+          "head": 9,
+          "delta": 0.04963799384828227,
+          "abs_delta": 0.04963799384828227
+        },
+        {
+          "layer": 22,
+          "head": 0,
+          "delta": -0.04931693873892812,
+          "abs_delta": 0.04931693873892812
+        },
+        {
+          "layer": 20,
+          "head": 3,
+          "delta": -0.04893986645752821,
+          "abs_delta": 0.04893986645752821
+        },
+        {
+          "layer": 25,
+          "head": 16,
+          "delta": 0.04597069772693757,
+          "abs_delta": 0.04597069772693757
+        },
+        {
+          "layer": 21,
+          "head": 25,
+          "delta": -0.04592908681754314,
+          "abs_delta": 0.04592908681754314
+        },
+        {
+          "layer": 23,
+          "head": 10,
+          "delta": -0.045347307146495486,
+          "abs_delta": 0.045347307146495486
+        },
+        {
+          "layer": 26,
+          "head": 12,
+          "delta": 0.04204479136118078,
+          "abs_delta": 0.04204479136118078
+        },
+        {
+          "layer": 20,
+          "head": 0,
+          "delta": -0.039293972997299864,
+          "abs_delta": 0.039293972997299864
+        }
+      ]
+    },
+    {
+      "run": "truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast.jsonl.gz",
+      "task": "truthfulqa_mc",
+      "model": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+      "chat_mode": "auto",
+      "quantization": "none",
+      "label": "hallucinated",
+      "shape": [
+        22,
+        32
+      ],
+      "top10": [
+        {
+          "layer": 19,
+          "head": 6,
+          "delta": -0.010168319235931478,
+          "abs_delta": 0.010168319235931478
+        },
+        {
+          "layer": 20,
+          "head": 18,
+          "delta": -0.010091471533156648,
+          "abs_delta": 0.010091471533156648
+        },
+        {
+          "layer": 15,
+          "head": 18,
+          "delta": -0.008347904914385307,
+          "abs_delta": 0.008347904914385307
+        },
+        {
+          "layer": 19,
+          "head": 30,
+          "delta": -0.00831875990158809,
+          "abs_delta": 0.00831875990158809
+        },
+        {
+          "layer": 21,
+          "head": 6,
+          "delta": -0.008231158736681288,
+          "abs_delta": 0.008231158736681288
+        },
+        {
+          "layer": 18,
+          "head": 17,
+          "delta": -0.008167221095032706,
+          "abs_delta": 0.008167221095032706
+        },
+        {
+          "layer": 7,
+          "head": 25,
+          "delta": 0.00708301483658802,
+          "abs_delta": 0.00708301483658802
+        },
+        {
+          "layer": 20,
+          "head": 21,
+          "delta": 0.0069732724271044655,
+          "abs_delta": 0.0069732724271044655
+        },
+        {
+          "layer": 19,
+          "head": 20,
+          "delta": -0.006723871305159862,
+          "abs_delta": 0.006723871305159862
+        },
+        {
+          "layer": 20,
+          "head": 16,
+          "delta": 0.006623510821581247,
+          "abs_delta": 0.006623510821581247
+        }
+      ]
+    },
+    {
+      "run": "truthfulqa_mc__microsoft__phi-2__K4__qlast.jsonl.gz",
+      "task": "truthfulqa_mc",
+      "model": "microsoft/phi-2",
+      "chat_mode": "auto",
+      "quantization": "none",
+      "label": "hallucinated",
+      "shape": [
+        32,
+        32
+      ],
+      "top10": [
+        {
+          "layer": 31,
+          "head": 3,
+          "delta": -0.1500685622887305,
+          "abs_delta": 0.1500685622887305
+        },
+        {
+          "layer": 30,
+          "head": 12,
+          "delta": -0.14991182902403044,
+          "abs_delta": 0.14991182902403044
+        },
+        {
+          "layer": 30,
+          "head": 21,
+          "delta": -0.12440582328372529,
+          "abs_delta": 0.12440582328372529
+        },
+        {
+          "layer": 30,
+          "head": 25,
+          "delta": -0.09925230599286272,
+          "abs_delta": 0.09925230599286272
+        },
+        {
+          "layer": 30,
+          "head": 8,
+          "delta": 0.09261403847856131,
+          "abs_delta": 0.09261403847856131
+        },
+        {
+          "layer": 30,
+          "head": 29,
+          "delta": -0.08864689555084493,
+          "abs_delta": 0.08864689555084493
+        },
+        {
+          "layer": 31,
+          "head": 16,
+          "delta": -0.08761942039456283,
+          "abs_delta": 0.08761942039456283
+        },
+        {
+          "layer": 30,
+          "head": 22,
+          "delta": -0.08385491435987907,
+          "abs_delta": 0.08385491435987907
+        },
+        {
+          "layer": 29,
+          "head": 0,
+          "delta": -0.08101491768457736,
+          "abs_delta": 0.08101491768457736
+        },
+        {
+          "layer": 30,
+          "head": 4,
+          "delta": 0.07744421763029713,
+          "abs_delta": 0.07744421763029713
+        }
+      ]
+    },
+    {
+      "run": "truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast.jsonl.gz",
+      "task": "truthfulqa_mc",
+      "model": "mistralai/Mistral-7B-Instruct-v0.3",
+      "chat_mode": "auto",
+      "quantization": "none",
+      "label": "hallucinated",
+      "shape": [
+        32,
+        32
+      ],
+      "top10": [
+        {
+          "layer": 19,
+          "head": 5,
+          "delta": -0.09167714404335275,
+          "abs_delta": 0.09167714404335275
+        },
+        {
+          "layer": 29,
+          "head": 17,
+          "delta": 0.08819569234674396,
+          "abs_delta": 0.08819569234674396
+        },
+        {
+          "layer": 18,
+          "head": 12,
+          "delta": -0.08694320627202223,
+          "abs_delta": 0.08694320627202223
+        },
+        {
+          "layer": 20,
+          "head": 18,
+          "delta": 0.08017298873805878,
+          "abs_delta": 0.08017298873805878
+        },
+        {
+          "layer": 18,
+          "head": 21,
+          "delta": 0.07524240357305123,
+          "abs_delta": 0.07524240357305123
+        },
+        {
+          "layer": 31,
+          "head": 6,
+          "delta": -0.06413257049134097,
+          "abs_delta": 0.06413257049134097
+        },
+        {
+          "layer": 17,
+          "head": 23,
+          "delta": 0.05972189722520971,
+          "abs_delta": 0.05972189722520971
+        },
+        {
+          "layer": 30,
+          "head": 20,
+          "delta": 0.05957988848225271,
+          "abs_delta": 0.05957988848225271
+        },
+        {
+          "layer": 31,
+          "head": 4,
+          "delta": -0.05836979785503782,
+          "abs_delta": 0.05836979785503782
+        },
+        {
+          "layer": 30,
+          "head": 22,
+          "delta": 0.05801045545353656,
+          "abs_delta": 0.05801045545353656
+        }
+      ]
+    },
+    {
+      "run": "truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast.jsonl.gz",
+      "task": "truthfulqa_mc",
+      "model": "mistralai/Mistral-Nemo-Instruct-2407",
+      "chat_mode": "auto",
+      "quantization": "none",
+      "label": "hallucinated",
+      "shape": [
+        40,
+        32
+      ],
+      "top10": [
+        {
+          "layer": 21,
+          "head": 11,
+          "delta": 0.058540905811250266,
+          "abs_delta": 0.058540905811250266
+        },
+        {
+          "layer": 18,
+          "head": 5,
+          "delta": 0.05841982104523413,
+          "abs_delta": 0.05841982104523413
+        },
+        {
+          "layer": 28,
+          "head": 11,
+          "delta": -0.050251331067577065,
+          "abs_delta": 0.050251331067577065
+        },
+        {
+          "layer": 28,
+          "head": 29,
+          "delta": -0.04557476837510477,
+          "abs_delta": 0.04557476837510477
+        },
+        {
+          "layer": 21,
+          "head": 28,
+          "delta": 0.045291681452387655,
+          "abs_delta": 0.045291681452387655
+        },
+        {
+          "layer": 38,
+          "head": 24,
+          "delta": -0.04524062917208155,
+          "abs_delta": 0.04524062917208155
+        },
+        {
+          "layer": 28,
+          "head": 30,
+          "delta": -0.044933383442290475,
+          "abs_delta": 0.044933383442290475
+        },
+        {
+          "layer": 14,
+          "head": 25,
+          "delta": -0.04307807038831002,
+          "abs_delta": 0.04307807038831002
+        },
+        {
+          "layer": 21,
+          "head": 9,
+          "delta": 0.04104246480377144,
+          "abs_delta": 0.04104246480377144
+        },
+        {
+          "layer": 20,
+          "head": 0,
+          "delta": 0.04075023980643541,
+          "abs_delta": 0.04075023980643541
+        }
+      ]
+    }
+  ]
+}

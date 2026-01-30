@@ -1,0 +1,21 @@
+{
+  "task": "mmlu",
+  "dataset": "cais/mmlu",
+  "subset": "all",
+  "split": "test",
+  "model": "Qwen/Qwen2.5-0.5B-Instruct",
+  "revision": null,
+  "samples": 100,
+  "seed": 42,
+  "truthfulqa_mc_policy": null,
+  "sink_tokens": 4,
+  "query_mode": "last",
+  "query_start": 0,
+  "chat": "auto",
+  "quantization": "none",
+  "device": "cuda",
+  "cuda_visible_devices": null,
+  "transformers_version": "4.44.2",
+  "torch_version": "2.0.1+cu118",
+  "timestamp": 1769690363.7447171
+}

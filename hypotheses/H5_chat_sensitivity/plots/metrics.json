@@ -1,0 +1,247 @@
+{
+  "generated_at": 1769718114.904384,
+  "inputs": [
+    "/Users/aeshef/Downloads/sinks/hypotheses/H5_chat_sensitivity/data/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H5_chat_sensitivity/data/truthfulqa_mc__EleutherAI__pythia-2.8b-deduped__K4__qlast__chatoff.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H5_chat_sensitivity/data/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H5_chat_sensitivity/data/truthfulqa_mc__Qwen__Qwen2.5-0.5B-Instruct__K4__qlast__chatoff.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H5_chat_sensitivity/data/truthfulqa_mc__Qwen__Qwen2.5-1.5B-Instruct__K4__qlast.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H5_chat_sensitivity/data/truthfulqa_mc__Qwen__Qwen2.5-1.5B-Instruct__K4__qlast__chatoff.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H5_chat_sensitivity/data/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H5_chat_sensitivity/data/truthfulqa_mc__Qwen__Qwen2.5-7B-Instruct__K4__qlast__chatoff.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H5_chat_sensitivity/data/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H5_chat_sensitivity/data/truthfulqa_mc__TinyLlama__TinyLlama-1.1B-Chat-v1.0__K4__qlast__chatoff.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H5_chat_sensitivity/data/truthfulqa_mc__microsoft__phi-2__K4__qlast.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H5_chat_sensitivity/data/truthfulqa_mc__microsoft__phi-2__K4__qlast__chatoff.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H5_chat_sensitivity/data/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H5_chat_sensitivity/data/truthfulqa_mc__mistralai__Mistral-7B-Instruct-v0.3__K4__qlast__chatoff.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H5_chat_sensitivity/data/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast.jsonl.gz",
+    "/Users/aeshef/Downloads/sinks/hypotheses/H5_chat_sensitivity/data/truthfulqa_mc__mistralai__Mistral-Nemo-Instruct-2407__K4__qlast__chatoff.jsonl.gz"
+  ],
+  "pairs": [
+    {
+      "task": "truthfulqa_mc",
+      "model": "EleutherAI/pythia-2.8b-deduped",
+      "quantization": "none",
+      "sink_tokens": 4,
+      "query_mode": "last",
+      "query_start": 0,
+      "seed": 42,
+      "auto": {
+        "label": "hallucinated",
+        "n": 415.0,
+        "pos_rate": 0.7662650602409639,
+        "cohens_d": -0.010218135889319115,
+        "mean_pos": 0.25416857820445726,
+        "mean_neg": 0.2543187310472707
+      },
+      "off": {
+        "label": "hallucinated",
+        "n": 415.0,
+        "pos_rate": 0.7662650602409639,
+        "cohens_d": -0.010218135889319115,
+        "mean_pos": 0.25416857820445726,
+        "mean_neg": 0.2543187310472707
+      },
+      "delta_cohens_d": 0.0,
+      "delta_mean_pos": 0.0,
+      "delta_mean_neg": 0.0
+    },
+    {
+      "task": "truthfulqa_mc",
+      "model": "Qwen/Qwen2.5-0.5B-Instruct",
+      "quantization": "none",
+      "sink_tokens": 4,
+      "query_mode": "last",
+      "query_start": 0,
+      "seed": 42,
+      "auto": {
+        "label": "hallucinated",
+        "n": 415.0,
+        "pos_rate": 0.7373493975903614,
+        "cohens_d": 0.16878447094657684,
+        "mean_pos": 0.36441362837611835,
+        "mean_neg": 0.3631767511380817
+      },
+      "off": {
+        "label": "hallucinated",
+        "n": 415.0,
+        "pos_rate": 0.6746987951807228,
+        "cohens_d": 0.055324469382602416,
+        "mean_pos": 0.47704607102652496,
+        "mean_neg": 0.47627146930895364
+      },
+      "delta_cohens_d": -0.11346000156397443,
+      "delta_mean_pos": 0.11263244265040662,
+      "delta_mean_neg": 0.11309471817087197
+    },
+    {
+      "task": "truthfulqa_mc",
+      "model": "Qwen/Qwen2.5-1.5B-Instruct",
+      "quantization": "none",
+      "sink_tokens": 4,
+      "query_mode": "last",
+      "query_start": 0,
+      "seed": 42,
+      "auto": {
+        "label": "hallucinated",
+        "n": 415.0,
+        "pos_rate": 0.7614457831325301,
+        "cohens_d": NaN,
+        "mean_pos": NaN,
+        "mean_neg": NaN
+      },
+      "off": {
+        "label": "hallucinated",
+        "n": 415.0,
+        "pos_rate": 0.7614457831325301,
+        "cohens_d": NaN,
+        "mean_pos": NaN,
+        "mean_neg": NaN
+      },
+      "delta_cohens_d": NaN,
+      "delta_mean_pos": NaN,
+      "delta_mean_neg": NaN
+    },
+    {
+      "task": "truthfulqa_mc",
+      "model": "Qwen/Qwen2.5-7B-Instruct",
+      "quantization": "none",
+      "sink_tokens": 4,
+      "query_mode": "last",
+      "query_start": 0,
+      "seed": 42,
+      "auto": {
+        "label": "hallucinated",
+        "n": 415.0,
+        "pos_rate": 0.5060240963855421,
+        "cohens_d": NaN,
+        "mean_pos": NaN,
+        "mean_neg": NaN
+      },
+      "off": {
+        "label": "hallucinated",
+        "n": 415.0,
+        "pos_rate": 0.5397590361445783,
+        "cohens_d": NaN,
+        "mean_pos": NaN,
+        "mean_neg": NaN
+      },
+      "delta_cohens_d": NaN,
+      "delta_mean_pos": NaN,
+      "delta_mean_neg": NaN
+    },
+    {
+      "task": "truthfulqa_mc",
+      "model": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+      "quantization": "none",
+      "sink_tokens": 4,
+      "query_mode": "last",
+      "query_start": 0,
+      "seed": 42,
+      "auto": {
+        "label": "hallucinated",
+        "n": 415.0,
+        "pos_rate": 0.7421686746987952,
+        "cohens_d": -0.05092423056624354,
+        "mean_pos": 0.391121203232108,
+        "mean_neg": 0.3913468670775717
+      },
+      "off": {
+        "label": "hallucinated",
+        "n": 415.0,
+        "pos_rate": 0.7253012048192771,
+        "cohens_d": -0.030301700516615144,
+        "mean_pos": 0.4125238126135375,
+        "mean_neg": 0.41277136245706797
+      },
+      "delta_cohens_d": 0.020622530049628395,
+      "delta_mean_pos": 0.021402609381429516,
+      "delta_mean_neg": 0.021424495379496256
+    },
+    {
+      "task": "truthfulqa_mc",
+      "model": "microsoft/phi-2",
+      "quantization": "none",
+      "sink_tokens": 4,
+      "query_mode": "last",
+      "query_start": 0,
+      "seed": 42,
+      "auto": {
+        "label": "hallucinated",
+        "n": 415.0,
+        "pos_rate": 0.5421686746987951,
+        "cohens_d": -0.12527470164145882,
+        "mean_pos": 0.26595501822290113,
+        "mean_neg": 0.26704870578342754
+      },
+      "off": {
+        "label": "hallucinated",
+        "n": 415.0,
+        "pos_rate": 0.5421686746987951,
+        "cohens_d": -0.12527470164145882,
+        "mean_pos": 0.26595501822290113,
+        "mean_neg": 0.26704870578342754
+      },
+      "delta_cohens_d": 0.0,
+      "delta_mean_pos": 0.0,
+      "delta_mean_neg": 0.0
+    },
+    {
+      "task": "truthfulqa_mc",
+      "model": "mistralai/Mistral-7B-Instruct-v0.3",
+      "quantization": "none",
+      "sink_tokens": 4,
+      "query_mode": "last",
+      "query_start": 0,
+      "seed": 42,
+      "auto": {
+        "label": "hallucinated",
+        "n": 415.0,
+        "pos_rate": 0.42891566265060244,
+        "cohens_d": -0.20468561645300648,
+        "mean_pos": 0.5720180884416325,
+        "mean_neg": 0.573620841802316
+      },
+      "off": {
+        "label": "hallucinated",
+        "n": 415.0,
+        "pos_rate": 0.491566265060241,
+        "cohens_d": -0.1010411278149514,
+        "mean_pos": 0.5485725376259093,
+        "mean_neg": 0.5497008867286504
+      },
+      "delta_cohens_d": 0.10364448863805507,
+      "delta_mean_pos": -0.023445550815723193,
+      "delta_mean_neg": -0.023919955073665622
+    },
+    {
+      "task": "truthfulqa_mc",
+      "model": "mistralai/Mistral-Nemo-Instruct-2407",
+      "quantization": "none",
+      "sink_tokens": 4,
+      "query_mode": "last",
+      "query_start": 0,
+      "seed": 42,
+      "auto": {
+        "label": "hallucinated",
+        "n": 415.0,
+        "pos_rate": 0.40481927710843374,
+        "cohens_d": -0.10492797438372656,
+        "mean_pos": 0.5022027108737911,
+        "mean_neg": 0.5030319844140683
+      },
+      "off": {
+        "label": "hallucinated",
+        "n": 415.0,
+        "pos_rate": 0.6289156626506024,
+        "cohens_d": -0.0570895502458393,
+        "mean_pos": 0.4425328377512966,
+        "mean_neg": 0.4434273339653775
+      },
+      "delta_cohens_d": 0.047838424137887255,
+      "delta_mean_pos": -0.0596698731224945,
+      "delta_mean_neg": -0.05960465044869079
+    }
+  ]
+}

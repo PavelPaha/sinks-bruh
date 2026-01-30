@@ -1,0 +1,44 @@
+{
+  "hypothesis_id": "H7_sink_entropy",
+  "generated_by": "aggregate_analysis.py",
+  "items": [
+    {
+      "type": "heatmap",
+      "path": "/home/jupyter/project/sinks/hypotheses/H7_sink_entropy/plots/agg/heatmap_pearson.png",
+      "metric": "pearson"
+    },
+    {
+      "type": "bar_delta",
+      "path": "/home/jupyter/project/sinks/hypotheses/H7_sink_entropy/plots/agg/delta_query_last_minus_range__K1__pearson.png",
+      "metric": "pearson",
+      "delta": "last-range@32",
+      "K": 1
+    },
+    {
+      "type": "bar_delta",
+      "path": "/home/jupyter/project/sinks/hypotheses/H7_sink_entropy/plots/agg/delta_query_last_minus_range__K4__pearson.png",
+      "metric": "pearson",
+      "delta": "last-range@32",
+      "K": 4
+    },
+    {
+      "type": "bar_delta",
+      "path": "/home/jupyter/project/sinks/hypotheses/H7_sink_entropy/plots/agg/delta_K4_minus_K1__qlast__pearson.png",
+      "metric": "pearson",
+      "delta": "K4-K1",
+      "q": "last"
+    },
+    {
+      "type": "bar_delta",
+      "path": "/home/jupyter/project/sinks/hypotheses/H7_sink_entropy/plots/agg/delta_K4_minus_K1__qrange@32__pearson.png",
+      "metric": "pearson",
+      "delta": "K4-K1",
+      "q": "range@32"
+    },
+    {
+      "type": "data",
+      "path": "/home/jupyter/project/sinks/hypotheses/H7_sink_entropy/plots/agg/agg_metrics.json",
+      "kind": "agg_metrics"
+    }
+  ]
+}

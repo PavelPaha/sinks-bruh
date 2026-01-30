@@ -15,3 +15,6 @@ wheels/
 # Generated artifacts
 artifacts/results/
 artifacts/plots/
+
+# Large archive (do not commit; exceeds GitHub 100 MB limit)
+hypotheses/hypotheses.zip
